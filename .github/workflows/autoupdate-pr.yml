@@ -11,10 +11,6 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v2
 
-    - name: Set up Git
-      run: |
-        git config user.name "Your Name"
-        git config user.email "youremail@example.com"
 
     - name: Fetch all branches and tags
       run: git fetch --prune --unshallow
@@ -34,3 +30,4 @@ jobs:
             git push --force-with-lease
           fi
         done
+        echo $(git branch -r --points-at refs/remotes/origin/pr/*)
