@@ -24,16 +24,16 @@ jobs:
           is_open=$(curl -s -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" https://api.github.com/repos/$GITHUB_REPOSITORY/pulls/$pr_number | jq -r '.state')
           echo "Checking out $pr_branch"
           echo "PR is $is_open"
-          if [ "$is_open" = "open" ]; then
-            git checkout "$pr_branch"
-            if git rebase origin/main; then
-              git push --force-with-lease
-            else
-              # Conflict occurred, resolve by keeping our changes
-              git checkout --ours .
-              git add .
-              git rebase --continue
-              git push --force-with-lease
-            fi
-          fi
+          # if [ "$is_open" = "open" ]; then
+          #   git checkout "$pr_branch"
+          #   if git rebase origin/main; then
+          #     git push --force-with-lease
+          #   else
+          #     # Conflict occurred, resolve by keeping our changes
+          #     git checkout --ours .
+          #     git add .
+          #     git rebase --continue
+          #     git push --force-with-lease
+          #   fi
+          # fi
         done
