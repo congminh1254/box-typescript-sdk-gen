@@ -6,6 +6,10 @@ on:
 jobs:
   update_pull_requests:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+      repository-projects: write
     
     steps:
     - name: Checkout repository
@@ -17,9 +21,6 @@ jobs:
     - name: Auto update pull requests
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      permissions:
-        contents: write
-        pull-requests: write
       run: |
         PR_LIST=$(curl -s -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" "https://api.github.com/repos/$GITHUB_REPOSITORY/pulls?state=open" | jq -r '.[] | .head.ref')
         for pr_branch in $PR_LIST; do
