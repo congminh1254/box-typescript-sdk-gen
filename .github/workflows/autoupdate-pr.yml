@@ -15,14 +15,14 @@ jobs:
       id: pr_list
       run: |
         PR_LIST=$(curl -s -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" "https://api.github.com/repos/$GITHUB_REPOSITORY/pulls?state=open" | jq -r '.[] | .head.ref')
-        echo "::set-output name=pr_list::$PR_LIST"
+        echo "PR_LIST=$PR_LIST" >> $GITHUB_ENV
     
     - name: Fetch all branches and tags
       run: git fetch --prune --unshallow
 
     - name: Auto update pull requests
       run: |
-        for pr_branch in ${{ steps.pr_list.outputs.pr_list }}; do
+        for pr_branch in $PR_LIST; do
           git checkout "$pr_branch"
           # if git rebase origin/main; then
           #   git push --force-with-lease
