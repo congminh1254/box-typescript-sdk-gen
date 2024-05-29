@@ -15,6 +15,11 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v2
 
+    - name: Set up Git
+      run: |
+        git config --global user.name 'box-sdk-build'
+        git config --global user.email 'box-sdk-build@box.com'
+
     - name: Fetch all branches and tags
       run: git fetch --prune --unshallow
 
