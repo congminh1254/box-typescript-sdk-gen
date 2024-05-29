@@ -1,0 +1,36 @@
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  update_pull_requests:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up Git
+      run: |
+        git config user.name "Your Name"
+        git config user.email "youremail@example.com"
+
+    - name: Fetch all branches and tags
+      run: git fetch --prune --unshallow
+
+    - name: Auto update pull requests
+      run: |
+        git fetch origin +refs/pull/*/head:refs/remotes/origin/pr/*
+        for branch in $(git branch -r --points-at refs/remotes/origin/pr/*); do
+          git checkout "${branch#origin/}"
+          if git rebase origin/main; then
+            git push --force-with-lease
+          else
+            # Conflict occurred, resolve by keeping our changes
+            git checkout --ours .
+            git add .
+            git rebase --continue
+            git push --force-with-lease
+          fi
+        done
