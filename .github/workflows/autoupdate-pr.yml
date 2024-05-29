@@ -11,29 +11,23 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v2
 
-
-    - name: Fetch all branches and tags
-      run: git fetch --prune --unshallow
+    - name: Fetch list of open pull requests
+      id: pr_list
+      run: |
+        PR_LIST=$(curl -s -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" "https://api.github.com/repos/$GITHUB_REPOSITORY/pulls?state=open" | jq -r '.[] | .head.ref')
+        echo "::set-output name=pr_list::$PR_LIST"
 
     - name: Auto update pull requests
       run: |
-        git fetch origin +refs/pull/*/head:refs/remotes/origin/pr/*
-        echo $(git ls-remote --refs origin 'refs/pull/*/merge')
-        for pr_number in $(git ls-remote --refs origin 'refs/pull/*/merge' | cut -d '/' -f 3); do
-          pr_branch="origin/pr/$pr_number"
-          is_open=$(curl -s -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" https://api.github.com/repos/$GITHUB_REPOSITORY/pulls/$pr_number | jq -r '.state')
-          echo "Checking out $pr_branch"
-          echo "PR is $is_open"
-          # if [ "$is_open" = "open" ]; then
-          #   git checkout "$pr_branch"
-          #   if git rebase origin/main; then
-          #     git push --force-with-lease
-          #   else
-          #     # Conflict occurred, resolve by keeping our changes
-          #     git checkout --ours .
-          #     git add .
-          #     git rebase --continue
-          #     git push --force-with-lease
-          #   fi
-          # fi
+        for pr_branch in ${{ steps.pr_list.outputs.pr_list }}; do
+          git checkout "$pr_branch"
+          if git rebase origin/main; then
+            git push --force-with-lease
+          else
+            # Conflict occurred, resolve by keeping our changes
+            git checkout --ours .
+            git add .
+            git rebase --continue
+            git push --force-with-lease
+          fi
         done
