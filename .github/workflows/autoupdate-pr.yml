@@ -24,13 +24,13 @@ jobs:
       run: |
         for pr_branch in ${{ steps.pr_list.outputs.pr_list }}; do
           git checkout "$pr_branch"
-          if git rebase origin/main; then
-            git push --force-with-lease
-          else
-            # Conflict occurred, resolve by keeping our changes
-            git checkout --ours .
-            git add .
-            git rebase --continue
-            git push --force-with-lease
-          fi
+          # if git rebase origin/main; then
+          #   git push --force-with-lease
+          # else
+          #   # Conflict occurred, resolve by keeping our changes
+          #   git checkout --ours .
+          #   git add .
+          #   git rebase --continue
+          #   git push --force-with-lease
+          # fi
         done
