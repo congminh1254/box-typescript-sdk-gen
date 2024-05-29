@@ -18,16 +18,19 @@ jobs:
     - name: Auto update pull requests
       run: |
         git fetch origin +refs/pull/*/head:refs/remotes/origin/pr/*
-        for branch in $(git branch -r | grep "origin/pr/"); do
-        echo "Checking out branch $branch"
-          git checkout "${branch#origin/}"
-          if git rebase origin/main; then
-            git push --force-with-lease
-          else
-            # Conflict occurred, resolve by keeping our changes
-            git checkout --ours .
-            git add .
-            git rebase --continue
-            git push --force-with-lease
+        for pr_number in $(git ls-remote --refs origin 'refs/pull/*/merge' | cut -d '/' -f 4); do
+          pr_branch="origin/pr/$pr_number"
+          is_open=$(curl -s -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" https://api.github.com/repos/$GITHUB_REPOSITORY/pulls/$pr_number | jq -r '.state')
+          if [ "$is_open" = "open" ]; then
+            git checkout "$pr_branch"
+            if git rebase origin/main; then
+              git push --force-with-lease
+            else
+              # Conflict occurred, resolve by keeping our changes
+              git checkout --ours .
+              git add .
+              git rebase --continue
+              git push --force-with-lease
+            fi
           fi
         done
