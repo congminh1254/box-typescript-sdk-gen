@@ -19,6 +19,7 @@ jobs:
       run: |
         git fetch origin +refs/pull/*/head:refs/remotes/origin/pr/*
         for branch in $(git branch -r --points-at refs/remotes/origin/pr/*); do
+          echo "Checking out $branch"
           git checkout "${branch#origin/}"
           if git rebase origin/main; then
             git push --force-with-lease
@@ -30,4 +31,3 @@ jobs:
             git push --force-with-lease
           fi
         done
-        echo $(git branch -r --points-at refs/remotes/origin/pr/*)
