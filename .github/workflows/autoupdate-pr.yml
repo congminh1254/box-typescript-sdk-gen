@@ -18,8 +18,8 @@ jobs:
     - name: Auto update pull requests
       run: |
         git fetch origin +refs/pull/*/head:refs/remotes/origin/pr/*
-        for branch in $(git branch -r --points-at refs/remotes/origin/pr/*); do
-          echo "Checking out $branch"
+        for branch in $(git branch -r | grep "origin/pr/"); do
+        echo "Checking out branch $branch"
           git checkout "${branch#origin/}"
           if git rebase origin/main; then
             git push --force-with-lease
