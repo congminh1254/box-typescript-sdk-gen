@@ -15,17 +15,19 @@ jobs:
       run: git fetch --prune --unshallow
 
     - name: Auto update pull requests
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
         PR_LIST=$(curl -s -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" "https://api.github.com/repos/$GITHUB_REPOSITORY/pulls?state=open" | jq -r '.[] | .head.ref')
         for pr_branch in $PR_LIST; do
           git checkout "$pr_branch"
-          # if git rebase origin/main; then
-          #   git push --force-with-lease
-          # else
-          #   # Conflict occurred, resolve by keeping our changes
-          #   git checkout --ours .
-          #   git add .
-          #   git rebase --continue
-          #   git push --force-with-lease
-          # fi
+          if git rebase origin/main; then
+            git push --force-with-lease
+          else
+            # Conflict occurred, resolve by keeping our changes
+            git checkout --ours .
+            git add .
+            git rebase --continue
+            git push --force-with-lease
+          fi
         done
