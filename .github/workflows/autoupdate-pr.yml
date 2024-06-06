@@ -18,6 +18,7 @@ jobs:
         env:
           repository: ${{ github.repository }}
           token: ${{ secrets.DISPATCH_ACCESS_TOKEN }}
+          persist-credentials: false
 
       - name: Set up Git
         run: |
