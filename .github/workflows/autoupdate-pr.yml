@@ -14,9 +14,7 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
-        env:
-          GITHUB_TOKEN: ${{ secrets.DISPATCH_ACCESS_TOKEN }}
+        uses: actions/checkout@v2
 
       - name: Set up Git
         run: |
@@ -28,9 +26,10 @@ jobs:
 
       - name: Auto update pull requests
         env:
-          GH_TOKEN: ${{ secrets.DISPATCH_ACCESS_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.DISPATCH_ACCESS_TOKEN }}
         run: |
           PR_LIST=$(curl -s -H "Authorization: Bearer ${{ secrets.DISPATCH_ACCESS_TOKEN }}" "https://api.github.com/repos/$GITHUB_REPOSITORY/pulls?state=open" | jq -r '.[] | .head.ref')
+          git remote set-url --push origin https://box-sdk-build:$GITHUB_TOKEN@github.com/$GITHUB_REPOSITORY
           for pr_branch in $PR_LIST; do
             git checkout "$pr_branch"
             if git merge origin/main; then
