@@ -18,7 +18,6 @@ jobs:
         env:
           repository: ${{ github.repository }}
           token: ${{ secrets.DISPATCH_ACCESS_TOKEN }}
-          persist-credentials: true
 
       - name: Set up Git
         run: |
@@ -41,6 +40,6 @@ jobs:
               echo "Auto resolve conflict by keeping our changes" > conflict_resolution.txt5
               git add .
               git commit -m "Auto resolve conflict by keeping our changes"
-              git push origin "$pr_branch"
+              git push https://box-sdk-build:${{ secrets.DISPATCH_ACCESS_TOKEN }}@github.com/$GITHUB_REPOSITORY "$pr_branch"
             fi
           done
