@@ -16,9 +16,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
-          repository: ${{ github.repository }}
           token: ${{ secrets.DISPATCH_ACCESS_TOKEN }}
-          persist-credentials: false
 
       - name: Set up Git
         run: |
@@ -34,13 +32,13 @@ jobs:
           for pr_branch in $PR_LIST; do
             git checkout "$pr_branch"
             if git merge origin/main; then
-              git push origin "$pr_branch"
+              git push
             else
               # Conflict occurred, resolve by keeping our changes
               git checkout --ours .
               echo "Auto resolve conflict by keeping our changes" > conflict_resolution.txt5
               git add .
               git commit -m "Auto resolve conflict by keeping our changes"
-              git push https://box-sdk-build:${{ secrets.DISPATCH_ACCESS_TOKEN }}@github.com/$GITHUB_REPOSITORY "$pr_branch"
+              git push
             fi
           done
