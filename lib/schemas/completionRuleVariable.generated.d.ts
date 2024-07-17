@@ -1,0 +1,25 @@
+import { SerializedData } from '../serialization/json.js';
+export type CompletionRuleVariableTypeField = 'variable';
+export type CompletionRuleVariableVariableTypeField = 'task_completion_rule';
+export type CompletionRuleVariableVariableValueField = 'all_assignees' | 'any_assignees';
+export declare class CompletionRuleVariable {
+    readonly type: CompletionRuleVariableTypeField;
+    readonly variableType: CompletionRuleVariableVariableTypeField;
+    readonly variableValue: CompletionRuleVariableVariableValueField;
+    constructor(fields: Omit<CompletionRuleVariable, 'type' | 'variableType'> & Partial<Pick<CompletionRuleVariable, 'type' | 'variableType'>>);
+}
+export interface CompletionRuleVariableInput {
+    readonly type?: CompletionRuleVariableTypeField;
+    readonly variableType?: CompletionRuleVariableVariableTypeField;
+    readonly variableValue: CompletionRuleVariableVariableValueField;
+}
+export declare function serializeCompletionRuleVariableTypeField(val: CompletionRuleVariableTypeField): SerializedData;
+export declare function deserializeCompletionRuleVariableTypeField(val: SerializedData): CompletionRuleVariableTypeField;
+export declare function serializeCompletionRuleVariableVariableTypeField(val: CompletionRuleVariableVariableTypeField): SerializedData;
+export declare function deserializeCompletionRuleVariableVariableTypeField(val: SerializedData): CompletionRuleVariableVariableTypeField;
+export declare function serializeCompletionRuleVariableVariableValueField(val: CompletionRuleVariableVariableValueField): SerializedData;
+export declare function deserializeCompletionRuleVariableVariableValueField(val: SerializedData): CompletionRuleVariableVariableValueField;
+export declare function serializeCompletionRuleVariable(val: CompletionRuleVariable): SerializedData;
+export declare function deserializeCompletionRuleVariable(val: SerializedData): CompletionRuleVariable;
+export declare function serializeCompletionRuleVariableInput(val: CompletionRuleVariableInput): SerializedData;
+export declare function deserializeCompletionRuleVariableInput(val: SerializedData): CompletionRuleVariableInput;

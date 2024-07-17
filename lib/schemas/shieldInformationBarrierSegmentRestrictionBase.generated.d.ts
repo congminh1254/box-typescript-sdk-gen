@@ -1,0 +1,10 @@
+import { SerializedData } from '../serialization/json.js';
+export type ShieldInformationBarrierSegmentRestrictionBaseTypeField = 'shield_information_barrier_segment_restriction';
+export interface ShieldInformationBarrierSegmentRestrictionBase {
+    readonly type?: ShieldInformationBarrierSegmentRestrictionBaseTypeField;
+    readonly id?: string;
+}
+export declare function serializeShieldInformationBarrierSegmentRestrictionBaseTypeField(val: ShieldInformationBarrierSegmentRestrictionBaseTypeField): SerializedData;
+export declare function deserializeShieldInformationBarrierSegmentRestrictionBaseTypeField(val: SerializedData): ShieldInformationBarrierSegmentRestrictionBaseTypeField;
+export declare function serializeShieldInformationBarrierSegmentRestrictionBase(val: ShieldInformationBarrierSegmentRestrictionBase): SerializedData;
+export declare function deserializeShieldInformationBarrierSegmentRestrictionBase(val: SerializedData): ShieldInformationBarrierSegmentRestrictionBase;

@@ -1,0 +1,32 @@
+import { SerializedData } from '../serialization/json.js';
+export type PostOAuth2TokenGrantTypeField = 'authorization_code' | 'refresh_token' | 'client_credentials' | 'urn:ietf:params:oauth:grant-type:jwt-bearer' | 'urn:ietf:params:oauth:grant-type:token-exchange';
+export type PostOAuth2TokenSubjectTokenTypeField = 'urn:ietf:params:oauth:token-type:access_token';
+export type PostOAuth2TokenActorTokenTypeField = 'urn:ietf:params:oauth:token-type:id_token';
+export type PostOAuth2TokenBoxSubjectTypeField = 'enterprise' | 'user';
+export interface PostOAuth2Token {
+    readonly grantType: PostOAuth2TokenGrantTypeField;
+    readonly clientId?: string;
+    readonly clientSecret?: string;
+    readonly code?: string;
+    readonly refreshToken?: string;
+    readonly assertion?: string;
+    readonly subjectToken?: string;
+    readonly subjectTokenType?: PostOAuth2TokenSubjectTokenTypeField;
+    readonly actorToken?: string;
+    readonly actorTokenType?: PostOAuth2TokenActorTokenTypeField;
+    readonly scope?: string;
+    readonly resource?: string;
+    readonly boxSubjectType?: PostOAuth2TokenBoxSubjectTypeField;
+    readonly boxSubjectId?: string;
+    readonly boxSharedLink?: string;
+}
+export declare function serializePostOAuth2TokenGrantTypeField(val: PostOAuth2TokenGrantTypeField): SerializedData;
+export declare function deserializePostOAuth2TokenGrantTypeField(val: SerializedData): PostOAuth2TokenGrantTypeField;
+export declare function serializePostOAuth2TokenSubjectTokenTypeField(val: PostOAuth2TokenSubjectTokenTypeField): SerializedData;
+export declare function deserializePostOAuth2TokenSubjectTokenTypeField(val: SerializedData): PostOAuth2TokenSubjectTokenTypeField;
+export declare function serializePostOAuth2TokenActorTokenTypeField(val: PostOAuth2TokenActorTokenTypeField): SerializedData;
+export declare function deserializePostOAuth2TokenActorTokenTypeField(val: SerializedData): PostOAuth2TokenActorTokenTypeField;
+export declare function serializePostOAuth2TokenBoxSubjectTypeField(val: PostOAuth2TokenBoxSubjectTypeField): SerializedData;
+export declare function deserializePostOAuth2TokenBoxSubjectTypeField(val: SerializedData): PostOAuth2TokenBoxSubjectTypeField;
+export declare function serializePostOAuth2Token(val: PostOAuth2Token): SerializedData;
+export declare function deserializePostOAuth2Token(val: SerializedData): PostOAuth2Token;

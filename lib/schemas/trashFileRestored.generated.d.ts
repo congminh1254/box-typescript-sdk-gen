@@ -1,0 +1,70 @@
+import { FileVersionMini } from './fileVersionMini.generated.js';
+import { FolderMini } from './folderMini.generated.js';
+import { UserMini } from './userMini.generated.js';
+import { DateTime } from '../internal/utils.js';
+import { SerializedData } from '../serialization/json.js';
+export type TrashFileRestoredTypeField = 'file';
+export interface TrashFileRestoredPathCollectionField {
+    readonly totalCount: number;
+    readonly entries: readonly FolderMini[];
+}
+export type TrashFileRestoredItemStatusField = 'active' | 'trashed' | 'deleted';
+export declare class TrashFileRestored {
+    readonly id: string;
+    readonly etag?: string;
+    readonly type: TrashFileRestoredTypeField;
+    readonly sequenceId: string;
+    readonly name?: string;
+    readonly sha1: string;
+    readonly fileVersion?: FileVersionMini;
+    readonly description: string;
+    readonly size: number;
+    readonly pathCollection: TrashFileRestoredPathCollectionField;
+    readonly createdAt: DateTime;
+    readonly modifiedAt: DateTime;
+    readonly trashedAt?: string;
+    readonly purgedAt?: string;
+    readonly contentCreatedAt?: DateTime;
+    readonly contentModifiedAt?: DateTime;
+    readonly createdBy?: UserMini;
+    readonly modifiedBy: UserMini;
+    readonly ownedBy: UserMini;
+    readonly sharedLink?: string;
+    readonly parent?: FolderMini;
+    readonly itemStatus: TrashFileRestoredItemStatusField;
+    constructor(fields: Omit<TrashFileRestored, 'type'> & Partial<Pick<TrashFileRestored, 'type'>>);
+}
+export interface TrashFileRestoredInput {
+    readonly id: string;
+    readonly etag?: string;
+    readonly type?: TrashFileRestoredTypeField;
+    readonly sequenceId: string;
+    readonly name?: string;
+    readonly sha1: string;
+    readonly fileVersion?: FileVersionMini;
+    readonly description: string;
+    readonly size: number;
+    readonly pathCollection: TrashFileRestoredPathCollectionField;
+    readonly createdAt: DateTime;
+    readonly modifiedAt: DateTime;
+    readonly trashedAt?: string;
+    readonly purgedAt?: string;
+    readonly contentCreatedAt?: DateTime;
+    readonly contentModifiedAt?: DateTime;
+    readonly createdBy?: UserMini;
+    readonly modifiedBy: UserMini;
+    readonly ownedBy: UserMini;
+    readonly sharedLink?: string;
+    readonly parent?: FolderMini;
+    readonly itemStatus: TrashFileRestoredItemStatusField;
+}
+export declare function serializeTrashFileRestoredTypeField(val: TrashFileRestoredTypeField): SerializedData;
+export declare function deserializeTrashFileRestoredTypeField(val: SerializedData): TrashFileRestoredTypeField;
+export declare function serializeTrashFileRestoredPathCollectionField(val: TrashFileRestoredPathCollectionField): SerializedData;
+export declare function deserializeTrashFileRestoredPathCollectionField(val: SerializedData): TrashFileRestoredPathCollectionField;
+export declare function serializeTrashFileRestoredItemStatusField(val: TrashFileRestoredItemStatusField): SerializedData;
+export declare function deserializeTrashFileRestoredItemStatusField(val: SerializedData): TrashFileRestoredItemStatusField;
+export declare function serializeTrashFileRestored(val: TrashFileRestored): SerializedData;
+export declare function deserializeTrashFileRestored(val: SerializedData): TrashFileRestored;
+export declare function serializeTrashFileRestoredInput(val: TrashFileRestoredInput): SerializedData;
+export declare function deserializeTrashFileRestoredInput(val: SerializedData): TrashFileRestoredInput;
