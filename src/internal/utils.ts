@@ -2,6 +2,7 @@ import { Buffer } from 'buffer';
 import type { Readable } from 'stream';
 import { v4 as uuidv4 } from 'uuid';
 import { SignJWT, importPKCS8 } from 'jose';
+import { createSHA1 } from 'hash-wasm';
 
 export function isBrowser() {
   return (
@@ -85,12 +86,10 @@ export type HashName = 'sha1';
 
 export class Hash {
   #hash: any;
-  #chunks: Uint8Array; // In browser environment, we need to buffer the chunks until we get the hash object
   algorithm: HashName;
 
   constructor({ algorithm }: { algorithm: HashName }) {
     this.algorithm = algorithm;
-    this.#chunks = new Uint8Array();
     if (isBrowser()) {
       this.#hash = undefined;
     } else {
@@ -98,34 +97,27 @@ export class Hash {
     }
   }
 
-  updateHash(data: Buffer) {
+  async initializeBrowserHash() {
+    switch (this.algorithm) {
+      case 'sha1':
+        this.#hash = await createSHA1();
+        this.#hash.init();
+        break;
+      default:
+        throw new Error(`Unsupported algorithm: ${this.algorithm}`);
+    }
+  }
+
+  async updateHash(data: Buffer) {
     if (isBrowser()) {
-      let dataBuffer =
-        typeof data === 'string' ? new TextEncoder().encode(data) : data;
-      let newChunks = new Uint8Array(this.#chunks.length + dataBuffer.length);
-      newChunks.set(this.#chunks);
-      newChunks.set(dataBuffer, this.#chunks.length);
-      this.#chunks = newChunks;
-      return;
+      if (!this.#hash) {
+        await this.initializeBrowserHash();
+      }
     }
     this.#hash.update(data);
   }
 
   async digestHash(encoding: 'base64'): Promise<string> {
-    if (isBrowser()) {
-      this.#hash = await window.crypto.subtle.digest(
-        this.algorithm,
-        this.#chunks,
-      );
-      const hashArray = Array.from(new Uint8Array(this.#hash));
-      const hashHex = hashArray
-        .map((b) => b.toString(16).padStart(2, '0'))
-        .join('');
-      if (encoding === 'base64') {
-        return hexStrToBase64(hashHex);
-      }
-      return hashHex;
-    }
     return this.#hash.digest(encoding);
   }
 }
