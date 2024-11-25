@@ -5,7 +5,7 @@ export interface TemplateSigner {
     readonly inputs?: readonly TemplateSignerInput[];
     /**
      * Email address of the signer */
-    readonly email?: string;
+    readonly email?: string | null;
     /**
      * Defines the role of the signer in the signature request. A role of
      * `signer` needs to sign the document, a role `approver`
@@ -25,10 +25,10 @@ export interface TemplateSigner {
      * If provided, this value points signers that are assigned the same inputs and belongs to same signer group.
      * A signer group is not a Box Group. It is an entity that belongs to the template itself and can only be used
      * within Box Sign requests created from it. */
-    readonly signerGroupId?: string;
+    readonly signerGroupId?: string | null;
     /**
      * A placeholder label for the signer set by the template creator to differentiate between signers. */
-    readonly label?: string;
+    readonly label?: string | null;
     /**
      * An identifier for the signer. This can be used to identify a signer within the template. */
     readonly publicId?: string;

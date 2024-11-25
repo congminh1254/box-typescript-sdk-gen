@@ -8,11 +8,11 @@ export declare class FileVersion extends FileVersionMini {
     readonly createdAt?: DateTime;
     readonly modifiedAt?: DateTime;
     readonly modifiedBy?: UserMini;
-    readonly trashedAt?: DateTime;
+    readonly trashedAt?: DateTime | null;
     readonly trashedBy?: UserMini;
-    readonly restoredAt?: DateTime;
+    readonly restoredAt?: DateTime | null;
     readonly restoredBy?: UserMini;
-    readonly purgedAt?: DateTime;
+    readonly purgedAt?: DateTime | null;
     readonly uploaderDisplayName?: string;
     constructor(fields: FileVersion);
 }

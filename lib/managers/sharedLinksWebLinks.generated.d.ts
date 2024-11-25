@@ -167,7 +167,7 @@ export interface AddShareLinkToWebLinkRequestBodySharedLinkField {
      * long and include a number, upper case letter, or
      * a non-numeric or non-alphabetic character.
      * A password can only be set when `access` is set to `open`. */
-    readonly password?: string;
+    readonly password?: string | null;
     /**
      * Defines a custom vanity name to use in the shared link URL,
      * for example `https://app.box.com/v/my-shared-link`.
@@ -254,7 +254,7 @@ export interface UpdateSharedLinkOnWebLinkRequestBodySharedLinkField {
      * long and include a number, upper case letter, or
      * a non-numeric or non-alphabetic character.
      * A password can only be set when `access` is set to `open`. */
-    readonly password?: string;
+    readonly password?: string | null;
     /**
      * Defines a custom vanity name to use in the shared link URL,
      * for example `https://app.box.com/v/my-shared-link`.
@@ -306,7 +306,7 @@ export interface RemoveSharedLinkFromWebLinkRequestBody {
     /**
      * By setting this value to `null`, the shared link
      * is removed from the web link. */
-    readonly sharedLink?: RemoveSharedLinkFromWebLinkRequestBodySharedLinkField;
+    readonly sharedLink?: RemoveSharedLinkFromWebLinkRequestBodySharedLinkField | null;
     readonly rawData?: SerializedData;
 }
 export interface RemoveSharedLinkFromWebLinkQueryParams {

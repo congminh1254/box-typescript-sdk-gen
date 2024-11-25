@@ -89,7 +89,7 @@ export interface UpdateShieldInformationBarrierSegmentByIdRequestBody {
     /**
      * The updated description for
      * the shield information barrier segment. */
-    readonly description?: string;
+    readonly description?: string | null;
     readonly rawData?: SerializedData;
 }
 export declare class UpdateShieldInformationBarrierSegmentByIdHeaders {

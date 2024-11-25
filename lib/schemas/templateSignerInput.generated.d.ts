@@ -35,13 +35,13 @@ export type TemplateSignerInput = SignRequestPrefillTag & {
     readonly pageIndex: number;
     /**
      * Document identifier. */
-    readonly documentId?: string;
+    readonly documentId?: string | null;
     /**
      * When the input is of the type `dropdown` this values will be filled with all the dropdown options. */
-    readonly dropdownChoices?: readonly string[];
+    readonly dropdownChoices?: readonly string[] | null;
     /**
      * When the input is of type `radio` they can be grouped to gather with this identifier. */
-    readonly groupId?: string;
+    readonly groupId?: string | null;
     /**
      * Where the input is located on a page. */
     readonly coordinates?: TemplateSignerInputCoordinatesField;
@@ -50,7 +50,7 @@ export type TemplateSignerInput = SignRequestPrefillTag & {
     readonly dimensions?: TemplateSignerInputDimensionsField;
     /**
      * The label field is used especially for text, attachment, radio, and checkbox type inputs. */
-    readonly label?: string;
+    readonly label?: string | null;
     /**
      * Whether this input was defined as read-only(immutable by signers) or not */
     readonly readOnly?: boolean;

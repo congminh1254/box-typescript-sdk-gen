@@ -168,7 +168,7 @@ export interface AddShareLinkToFolderRequestBodySharedLinkField {
      * long and include a number, upper case letter, or
      * a non-numeric or non-alphabetic character.
      * A password can only be set when `access` is set to `open`. */
-    readonly password?: string;
+    readonly password?: string | null;
     /**
      * Defines a custom vanity name to use in the shared link URL,
      * for example `https://app.box.com/v/my-shared-link`.
@@ -308,7 +308,7 @@ export interface RemoveSharedLinkFromFolderRequestBody {
     /**
      * By setting this value to `null`, the shared link
      * is removed from the folder. */
-    readonly sharedLink?: RemoveSharedLinkFromFolderRequestBodySharedLinkField;
+    readonly sharedLink?: RemoveSharedLinkFromFolderRequestBodySharedLinkField | null;
     readonly rawData?: SerializedData;
 }
 export interface RemoveSharedLinkFromFolderQueryParams {

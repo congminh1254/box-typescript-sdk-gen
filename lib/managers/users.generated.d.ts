@@ -303,7 +303,7 @@ export interface UpdateUserByIdRequestBody {
     /**
      * Set this to `null` to roll the user out of the enterprise
      * and make them a free user */
-    readonly enterprise?: string;
+    readonly enterprise?: string | null;
     /**
      * Whether the user should receive an email when they
      * are rolled out of an enterprise */
@@ -376,7 +376,7 @@ export interface UpdateUserByIdRequestBody {
      * to the primary email address.
      *
      * Set this value to `null` to remove the notification email. */
-    readonly notificationEmail?: UpdateUserByIdRequestBodyNotificationEmailField;
+    readonly notificationEmail?: UpdateUserByIdRequestBodyNotificationEmailField | null;
     /**
      * An external identifier for an app user, which can be used to look
      * up the user. This can be used to tie user IDs from external

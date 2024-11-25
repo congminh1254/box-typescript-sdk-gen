@@ -212,7 +212,7 @@ export interface UpdateFileByIdRequestBodySharedLinkField {
      * long and include a number, upper case letter, or
      * a non-numeric or non-alphabetic character.
      * A password can only be set when `access` is set to `open`. */
-    readonly password?: string;
+    readonly password?: string | null;
     /**
      * Defines a custom vanity name to use in the shared link URL,
      * for example `https://app.box.com/v/my-shared-link`.
@@ -276,14 +276,14 @@ export interface UpdateFileByIdRequestBody {
      * in the description. */
     readonly description?: string;
     readonly parent?: UpdateFileByIdRequestBodyParentField;
-    readonly sharedLink?: UpdateFileByIdRequestBodySharedLinkField;
+    readonly sharedLink?: UpdateFileByIdRequestBodySharedLinkField | null;
     /**
      * Defines a lock on an item. This prevents the item from being
      * moved, renamed, or otherwise changed by anyone other than the user
      * who created the lock.
      *
      * Set this to `null` to remove the lock. */
-    readonly lock?: UpdateFileByIdRequestBodyLockField;
+    readonly lock?: UpdateFileByIdRequestBodyLockField | null;
     /**
      * The retention expiration timestamp for the given file. This
      * date cannot be shortened once set on a file. */
@@ -303,7 +303,7 @@ export interface UpdateFileByIdRequestBody {
      * the file from all collections.
      *
      * [1]: e://get-collections */
-    readonly collections?: readonly UpdateFileByIdRequestBodyCollectionsField[];
+    readonly collections?: readonly UpdateFileByIdRequestBodyCollectionsField[] | null;
     /**
      * The tags for this item. These tags are shown in
      * the Box web app and mobile apps next to an item.

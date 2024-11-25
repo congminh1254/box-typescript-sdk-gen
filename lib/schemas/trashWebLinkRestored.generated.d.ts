@@ -47,11 +47,11 @@ export interface TrashWebLinkRestored {
     /**
      * The time at which this bookmark was put in the
      * trash - becomes `null` after restore. */
-    readonly trashedAt?: string;
+    readonly trashedAt?: string | null;
     /**
      * The time at which this bookmark will be permanently
      * deleted - becomes `null` after restore. */
-    readonly purgedAt?: string;
+    readonly purgedAt?: string | null;
     readonly createdBy?: UserMini;
     readonly modifiedBy?: UserMini;
     readonly ownedBy?: UserMini;
@@ -59,7 +59,7 @@ export interface TrashWebLinkRestored {
      * The shared link for this bookmark. This will
      * be `null` if a bookmark had been trashed, even though the original shared
      * link does become active again. */
-    readonly sharedLink?: string;
+    readonly sharedLink?: string | null;
     /**
      * Whether this item is deleted or not. Values include `active`,
      * `trashed` if the file has been moved to the trash, and `deleted` if

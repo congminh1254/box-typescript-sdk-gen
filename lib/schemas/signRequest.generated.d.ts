@@ -30,7 +30,7 @@ export type SignRequest = SignRequestBase & {
     readonly signers?: readonly SignRequestSigner[];
     /**
      * Force a specific color for the signature (blue, black, or red). */
-    readonly signatureColor?: string;
+    readonly signatureColor?: string | null;
     /**
      * Box Sign request ID. */
     readonly id?: string;
@@ -41,7 +41,7 @@ export type SignRequest = SignRequestBase & {
      * using the UI. The signature request is not
      * sent until the preparation
      * phase is complete. */
-    readonly prepareUrl?: string;
+    readonly prepareUrl?: string | null;
     readonly signingLog?: FileMini;
     /**
      * Describes the status of the signature request. */
@@ -53,7 +53,7 @@ export type SignRequest = SignRequestBase & {
     readonly signFiles?: SignRequestSignFilesField;
     /**
      * Uses `days_valid` to calculate the date and time, in GMT, the sign request will expire if unsigned. */
-    readonly autoExpireAt?: DateTime;
+    readonly autoExpireAt?: DateTime | null;
     readonly parentFolder?: FolderMini;
 };
 export declare function serializeSignRequestTypeField(val: SignRequestTypeField): SerializedData;

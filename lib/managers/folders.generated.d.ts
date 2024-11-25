@@ -230,7 +230,7 @@ export interface UpdateFolderByIdRequestBodySharedLinkField {
      * long and include a number, upper case letter, or
      * a non-numeric or non-alphabetic character.
      * A password can only be set when `access` is set to `open`. */
-    readonly password?: string;
+    readonly password?: string | null;
     /**
      * Defines a custom vanity name to use in the shared link URL,
      * for example `https://app.box.com/v/my-shared-link`.
@@ -295,7 +295,7 @@ export interface UpdateFolderByIdRequestBody {
      * the folder or to restore it out of the trash. */
     readonly parent?: UpdateFolderByIdRequestBodyParentField;
     readonly sharedLink?: UpdateFolderByIdRequestBodySharedLinkField;
-    readonly folderUploadEmail?: UpdateFolderByIdRequestBodyFolderUploadEmailField;
+    readonly folderUploadEmail?: UpdateFolderByIdRequestBodyFolderUploadEmailField | null;
     /**
      * The tags for this item. These tags are shown in
      * the Box web app and mobile apps next to an item.
@@ -323,7 +323,7 @@ export interface UpdateFolderByIdRequestBody {
      * the folder from all collections.
      *
      * [1]: e://get-collections */
-    readonly collections?: readonly UpdateFolderByIdRequestBodyCollectionsField[];
+    readonly collections?: readonly UpdateFolderByIdRequestBodyCollectionsField[] | null;
     /**
      * Restricts collaborators who are not the owner of
      * this folder from viewing other collaborations on

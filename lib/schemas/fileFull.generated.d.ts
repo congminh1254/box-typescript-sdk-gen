@@ -72,7 +72,7 @@ export interface FileFullLockField {
      * field identifies the type of the application that holds the lock.
      * This is an open enum and may be extended with additional values in
      * the future. */
-    readonly appType?: FileFullLockAppTypeField;
+    readonly appType?: FileFullLockAppTypeField | null;
     readonly rawData?: SerializedData;
 }
 export type FileFullExpiringEmbedLinkTokenTypeField = 'bearer';
@@ -225,7 +225,7 @@ export declare class FileFull extends File {
     readonly commentCount?: number;
     readonly permissions?: FileFullPermissionsField;
     readonly tags?: readonly string[];
-    readonly lock?: FileFullLockField;
+    readonly lock?: FileFullLockField | null;
     readonly extension?: string;
     readonly isPackage?: boolean;
     readonly expiringEmbedLink?: FileFullExpiringEmbedLinkField;
@@ -235,12 +235,12 @@ export declare class FileFull extends File {
     readonly isExternallyOwned?: boolean;
     readonly hasCollaborations?: boolean;
     readonly metadata?: FileFullMetadataField;
-    readonly expiresAt?: DateTime;
+    readonly expiresAt?: DateTime | null;
     readonly representations?: FileFullRepresentationsField;
     readonly classification?: FileFullClassificationField;
     readonly uploaderDisplayName?: string;
-    readonly dispositionAt?: DateTime;
-    readonly sharedLinkPermissionOptions?: readonly FileFullSharedLinkPermissionOptionsField[];
+    readonly dispositionAt?: DateTime | null;
+    readonly sharedLinkPermissionOptions?: readonly FileFullSharedLinkPermissionOptionsField[] | null;
     readonly isAssociatedWithAppItem?: boolean;
     constructor(fields: FileFull);
 }

@@ -160,7 +160,7 @@ export interface CreateGroupMembershipRequestBody {
      * them accordingly, omitted permissions will be enabled by default. */
     readonly configurablePermissions?: {
         readonly [key: string]: boolean;
-    };
+    } | null;
     readonly rawData?: SerializedData;
 }
 export interface CreateGroupMembershipQueryParams {
@@ -237,7 +237,7 @@ export interface UpdateGroupMembershipByIdRequestBody {
      * them accordingly, omitted permissions will be enabled by default. */
     readonly configurablePermissions?: {
         readonly [key: string]: boolean;
-    };
+    } | null;
     readonly rawData?: SerializedData;
 }
 export interface UpdateGroupMembershipByIdQueryParams {

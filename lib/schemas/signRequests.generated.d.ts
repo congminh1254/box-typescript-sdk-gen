@@ -8,7 +8,7 @@ export interface SignRequests {
     readonly limit?: number;
     /**
      * The marker for the start of the next page of results. */
-    readonly nextMarker?: string;
+    readonly nextMarker?: string | null;
     /**
      * A list of Box Sign requests. */
     readonly entries?: readonly SignRequest[];

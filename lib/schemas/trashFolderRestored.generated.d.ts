@@ -27,7 +27,7 @@ export interface TrashFolderRestored {
      * The HTTP `etag` of this folder. This can be used within some API
      * endpoints in the `If-Match` and `If-None-Match` headers to only
      * perform changes on the folder if (no) changes have happened. */
-    readonly etag?: string;
+    readonly etag?: string | null;
     /**
      * `folder` */
     readonly type?: TrashFolderRestoredTypeField;
@@ -39,12 +39,12 @@ export interface TrashFolderRestored {
      * The date and time when the folder was created. This value may
      * be `null` for some folders such as the root folder or the trash
      * folder. */
-    readonly createdAt?: DateTime;
+    readonly createdAt?: DateTime | null;
     /**
      * The date and time when the folder was last updated. This value may
      * be `null` for some folders such as the root folder or the trash
      * folder. */
-    readonly modifiedAt?: DateTime;
+    readonly modifiedAt?: DateTime | null;
     readonly description?: string;
     /**
      * The folder size in bytes.
@@ -58,29 +58,29 @@ export interface TrashFolderRestored {
     /**
      * The time at which this folder was put in the
      * trash - becomes `null` after restore. */
-    readonly trashedAt?: string;
+    readonly trashedAt?: string | null;
     /**
      * The time at which this folder is expected to be purged
      * from the trash  - becomes `null` after restore. */
-    readonly purgedAt?: string;
+    readonly purgedAt?: string | null;
     /**
      * The date and time at which this folder was originally
      * created. */
-    readonly contentCreatedAt?: DateTime;
+    readonly contentCreatedAt?: DateTime | null;
     /**
      * The date and time at which this folder was last updated. */
-    readonly contentModifiedAt?: DateTime;
+    readonly contentModifiedAt?: DateTime | null;
     readonly ownedBy?: UserMini;
     /**
      * The shared link for this file. This will
      * be `null` if a folder had been trashed, even though the original shared
      * link does become active again. */
-    readonly sharedLink?: string;
+    readonly sharedLink?: string | null;
     /**
      * The folder upload email for this folder. This will
      * be `null` if a folder has been trashed, even though the original upload
      * email does become active again. */
-    readonly folderUploadEmail?: string;
+    readonly folderUploadEmail?: string | null;
     readonly parent?: FolderMini;
     /**
      * Defines if this item has been deleted or not.

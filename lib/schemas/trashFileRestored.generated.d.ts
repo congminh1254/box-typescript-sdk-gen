@@ -28,7 +28,7 @@ export declare class TrashFileRestored {
      * The HTTP `etag` of this file. This can be used within some API
      * endpoints in the `If-Match` and `If-None-Match` headers to only
      * perform changes on the file if (no) changes have happened. */
-    readonly etag?: string;
+    readonly etag?: string | null;
     /**
      * `file` */
     readonly type: TrashFileRestoredTypeField;
@@ -58,19 +58,19 @@ export declare class TrashFileRestored {
     /**
      * The time at which this file was put in the
      * trash - becomes `null` after restore. */
-    readonly trashedAt?: string;
+    readonly trashedAt?: string | null;
     /**
      * The time at which this file is expected to be purged
      * from the trash  - becomes `null` after restore. */
-    readonly purgedAt?: string;
+    readonly purgedAt?: string | null;
     /**
      * The date and time at which this file was originally
      * created, which might be before it was uploaded to Box. */
-    readonly contentCreatedAt?: DateTime;
+    readonly contentCreatedAt?: DateTime | null;
     /**
      * The date and time at which this file was last updated,
      * which might be before it was uploaded to Box. */
-    readonly contentModifiedAt?: DateTime;
+    readonly contentModifiedAt?: DateTime | null;
     readonly createdBy?: UserMini;
     readonly modifiedBy: UserMini;
     readonly ownedBy: UserMini;
@@ -78,7 +78,7 @@ export declare class TrashFileRestored {
      * The shared link for this file. This will
      * be `null` if a file had been trashed, even though the original shared
      * link does become active again. */
-    readonly sharedLink?: string;
+    readonly sharedLink?: string | null;
     readonly parent?: FolderMini;
     /**
      * Defines if this item has been deleted or not.
@@ -104,7 +104,7 @@ export interface TrashFileRestoredInput {
      * The HTTP `etag` of this file. This can be used within some API
      * endpoints in the `If-Match` and `If-None-Match` headers to only
      * perform changes on the file if (no) changes have happened. */
-    readonly etag?: string;
+    readonly etag?: string | null;
     /**
      * `file` */
     readonly type?: TrashFileRestoredTypeField;
@@ -134,19 +134,19 @@ export interface TrashFileRestoredInput {
     /**
      * The time at which this file was put in the
      * trash - becomes `null` after restore. */
-    readonly trashedAt?: string;
+    readonly trashedAt?: string | null;
     /**
      * The time at which this file is expected to be purged
      * from the trash  - becomes `null` after restore. */
-    readonly purgedAt?: string;
+    readonly purgedAt?: string | null;
     /**
      * The date and time at which this file was originally
      * created, which might be before it was uploaded to Box. */
-    readonly contentCreatedAt?: DateTime;
+    readonly contentCreatedAt?: DateTime | null;
     /**
      * The date and time at which this file was last updated,
      * which might be before it was uploaded to Box. */
-    readonly contentModifiedAt?: DateTime;
+    readonly contentModifiedAt?: DateTime | null;
     readonly createdBy?: UserMini;
     readonly modifiedBy: UserMini;
     readonly ownedBy: UserMini;
@@ -154,7 +154,7 @@ export interface TrashFileRestoredInput {
      * The shared link for this file. This will
      * be `null` if a file had been trashed, even though the original shared
      * link does become active again. */
-    readonly sharedLink?: string;
+    readonly sharedLink?: string | null;
     readonly parent?: FolderMini;
     /**
      * Defines if this item has been deleted or not.

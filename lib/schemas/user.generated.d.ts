@@ -24,7 +24,7 @@ export declare class User extends UserMini {
     readonly phone?: string;
     readonly address?: string;
     readonly avatarUrl?: string;
-    readonly notificationEmail?: UserNotificationEmailField;
+    readonly notificationEmail?: UserNotificationEmailField | null;
     constructor(fields: User);
 }
 export declare function serializeUserStatusField(val: UserStatusField): SerializedData;

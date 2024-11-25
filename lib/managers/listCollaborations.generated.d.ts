@@ -1,4 +1,5 @@
 import { Collaborations } from '../schemas/collaborations.generated.js';
+import { CollaborationsOffsetPaginated } from '../schemas/collaborationsOffsetPaginated.generated.js';
 import { Authentication } from '../networking/auth.generated.js';
 import { NetworkSession } from '../networking/network.generated.js';
 import { CancellationToken } from '../internal/utils.js';
@@ -94,6 +95,15 @@ export interface GetFolderCollaborationsQueryParams {
      * fields for the mini representation are returned, additional
      * to the fields requested. */
     readonly fields?: readonly string[];
+    /**
+     * The maximum number of items to return per page. */
+    readonly limit?: number;
+    /**
+     * Defines the position marker at which to begin returning results. This is
+     * used when paginating using marker-based pagination.
+     *
+     * This requires `usemarker` to be set to `true`. */
+    readonly marker?: string;
 }
 export declare class GetFolderCollaborationsHeaders {
     /**
@@ -219,9 +229,9 @@ export declare class ListCollaborationsManager {
      * Retrieves all pending collaboration invites for this user.
      * @param {GetCollaborationsQueryParams} queryParams Query parameters of getCollaborations method
      * @param {GetCollaborationsOptionalsInput} optionalsInput
-     * @returns {Promise<Collaborations>}
+     * @returns {Promise<CollaborationsOffsetPaginated>}
      */
-    getCollaborations(queryParams: GetCollaborationsQueryParams, optionalsInput?: GetCollaborationsOptionalsInput): Promise<Collaborations>;
+    getCollaborations(queryParams: GetCollaborationsQueryParams, optionalsInput?: GetCollaborationsOptionalsInput): Promise<CollaborationsOffsetPaginated>;
     /**
        * Retrieves all the collaborations for a group. The user
        * must have admin permissions to inspect enterprise's groups.
@@ -231,9 +241,9 @@ export declare class ListCollaborationsManager {
        * @param {string} groupId The ID of the group.
       Example: "57645"
        * @param {GetGroupCollaborationsOptionalsInput} optionalsInput
-       * @returns {Promise<Collaborations>}
+       * @returns {Promise<CollaborationsOffsetPaginated>}
        */
-    getGroupCollaborations(groupId: string, optionalsInput?: GetGroupCollaborationsOptionalsInput): Promise<Collaborations>;
+    getGroupCollaborations(groupId: string, optionalsInput?: GetGroupCollaborationsOptionalsInput): Promise<CollaborationsOffsetPaginated>;
 }
 export interface ListCollaborationsManagerInput {
     readonly auth?: Authentication;

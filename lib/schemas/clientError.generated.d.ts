@@ -20,7 +20,7 @@ export interface ClientError {
      * a per-endpoint basis. `message` is only one example. */
     readonly contextInfo?: {
         readonly [key: string]: any;
-    };
+    } | null;
     /**
      * A URL that links to more information about why this error occurred. */
     readonly helpUrl?: string;

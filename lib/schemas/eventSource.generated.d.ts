@@ -28,7 +28,7 @@ export interface EventSource {
      * triggered the event. This field will not appear if the item does not
      * have a classification set. */
     readonly classification?: EventSourceClassificationField;
-    readonly parent?: FolderMini;
+    readonly parent?: FolderMini | null;
     readonly ownedBy?: UserMini;
     readonly rawData?: SerializedData;
 }

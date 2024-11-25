@@ -13,10 +13,10 @@ export interface TrashFolderPathCollectionEntriesField {
     readonly id?: string;
     /**
      * This field is null for the Trash folder */
-    readonly sequenceId?: string;
+    readonly sequenceId?: string | null;
     /**
      * This field is null for the Trash folder */
-    readonly etag?: string;
+    readonly etag?: string | null;
     /**
      * The name of the Trash folder. */
     readonly name?: string;
@@ -46,7 +46,7 @@ export declare class TrashFolder {
      * The HTTP `etag` of this folder. This can be used within some API
      * endpoints in the `If-Match` and `If-None-Match` headers to only
      * perform changes on the folder if (no) changes have happened. */
-    readonly etag?: string;
+    readonly etag?: string | null;
     /**
      * `folder` */
     readonly type: TrashFolderTypeField;
@@ -58,12 +58,12 @@ export declare class TrashFolder {
      * The date and time when the folder was created. This value may
      * be `null` for some folders such as the root folder or the trash
      * folder. */
-    readonly createdAt?: DateTime;
+    readonly createdAt?: DateTime | null;
     /**
      * The date and time when the folder was last updated. This value may
      * be `null` for some folders such as the root folder or the trash
      * folder. */
-    readonly modifiedAt?: DateTime;
+    readonly modifiedAt?: DateTime | null;
     readonly description: string;
     /**
      * The folder size in bytes.
@@ -76,29 +76,29 @@ export declare class TrashFolder {
     readonly modifiedBy: UserMini;
     /**
      * The time at which this folder was put in the trash. */
-    readonly trashedAt?: DateTime;
+    readonly trashedAt?: DateTime | null;
     /**
      * The time at which this folder is expected to be purged
      * from the trash. */
-    readonly purgedAt?: DateTime;
+    readonly purgedAt?: DateTime | null;
     /**
      * The date and time at which this folder was originally
      * created. */
-    readonly contentCreatedAt?: DateTime;
+    readonly contentCreatedAt?: DateTime | null;
     /**
      * The date and time at which this folder was last updated. */
-    readonly contentModifiedAt?: DateTime;
+    readonly contentModifiedAt?: DateTime | null;
     readonly ownedBy: UserMini;
     /**
      * The shared link for this folder. This will
      * be `null` if a folder has been trashed, since the link will no longer
      * be active. */
-    readonly sharedLink?: string;
+    readonly sharedLink?: string | null;
     /**
      * The folder upload email for this folder. This will
      * be `null` if a folder has been trashed, since the upload will no longer
      * work. */
-    readonly folderUploadEmail?: string;
+    readonly folderUploadEmail?: string | null;
     readonly parent?: FolderMini;
     /**
      * Defines if this item has been deleted or not.
@@ -124,7 +124,7 @@ export interface TrashFolderInput {
      * The HTTP `etag` of this folder. This can be used within some API
      * endpoints in the `If-Match` and `If-None-Match` headers to only
      * perform changes on the folder if (no) changes have happened. */
-    readonly etag?: string;
+    readonly etag?: string | null;
     /**
      * `folder` */
     readonly type?: TrashFolderTypeField;
@@ -136,12 +136,12 @@ export interface TrashFolderInput {
      * The date and time when the folder was created. This value may
      * be `null` for some folders such as the root folder or the trash
      * folder. */
-    readonly createdAt?: DateTime;
+    readonly createdAt?: DateTime | null;
     /**
      * The date and time when the folder was last updated. This value may
      * be `null` for some folders such as the root folder or the trash
      * folder. */
-    readonly modifiedAt?: DateTime;
+    readonly modifiedAt?: DateTime | null;
     readonly description: string;
     /**
      * The folder size in bytes.
@@ -154,29 +154,29 @@ export interface TrashFolderInput {
     readonly modifiedBy: UserMini;
     /**
      * The time at which this folder was put in the trash. */
-    readonly trashedAt?: DateTime;
+    readonly trashedAt?: DateTime | null;
     /**
      * The time at which this folder is expected to be purged
      * from the trash. */
-    readonly purgedAt?: DateTime;
+    readonly purgedAt?: DateTime | null;
     /**
      * The date and time at which this folder was originally
      * created. */
-    readonly contentCreatedAt?: DateTime;
+    readonly contentCreatedAt?: DateTime | null;
     /**
      * The date and time at which this folder was last updated. */
-    readonly contentModifiedAt?: DateTime;
+    readonly contentModifiedAt?: DateTime | null;
     readonly ownedBy: UserMini;
     /**
      * The shared link for this folder. This will
      * be `null` if a folder has been trashed, since the link will no longer
      * be active. */
-    readonly sharedLink?: string;
+    readonly sharedLink?: string | null;
     /**
      * The folder upload email for this folder. This will
      * be `null` if a folder has been trashed, since the upload will no longer
      * work. */
-    readonly folderUploadEmail?: string;
+    readonly folderUploadEmail?: string | null;
     readonly parent?: FolderMini;
     /**
      * Defines if this item has been deleted or not.

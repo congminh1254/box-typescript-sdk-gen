@@ -53,14 +53,14 @@ export interface FileSharedLinkField {
      * extension so that the file will be saved with the right file type.
      *
      * This property will be `null` for folders. */
-    readonly downloadUrl?: string;
+    readonly downloadUrl?: string | null;
     /**
      * The "Custom URL" that can also be used to preview the item on Box.  Custom
      * URLs can only be created or modified in the Box Web application. */
-    readonly vanityUrl?: string;
+    readonly vanityUrl?: string | null;
     /**
      * The custom name of a shared link, as used in the `vanity_url` field. */
-    readonly vanityName?: string;
+    readonly vanityName?: string | null;
     /**
      * The access level for this shared link.
      *
@@ -87,7 +87,7 @@ export interface FileSharedLinkField {
     /**
      * The date and time when this link will be unshared. This field can only be
      * set by users with paid accounts. */
-    readonly unsharedAt?: DateTime;
+    readonly unsharedAt?: DateTime | null;
     /**
      * Defines if the shared link requires a password to access the item. */
     readonly isPasswordEnabled: boolean;
@@ -111,15 +111,15 @@ export declare class File extends FileMini {
     readonly pathCollection?: FilePathCollectionField;
     readonly createdAt?: DateTime;
     readonly modifiedAt?: DateTime;
-    readonly trashedAt?: DateTime;
-    readonly purgedAt?: DateTime;
-    readonly contentCreatedAt?: DateTime;
-    readonly contentModifiedAt?: DateTime;
+    readonly trashedAt?: DateTime | null;
+    readonly purgedAt?: DateTime | null;
+    readonly contentCreatedAt?: DateTime | null;
+    readonly contentModifiedAt?: DateTime | null;
     readonly createdBy?: UserMini;
     readonly modifiedBy?: UserMini;
     readonly ownedBy?: UserMini;
     readonly sharedLink?: FileSharedLinkField;
-    readonly parent?: FolderMini;
+    readonly parent?: FolderMini | null;
     readonly itemStatus?: FileItemStatusField;
     constructor(fields: File);
 }

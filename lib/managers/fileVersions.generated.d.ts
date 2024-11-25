@@ -162,7 +162,7 @@ export interface UpdateFileVersionByIdRequestBody {
     /**
      * Set this to `null` to clear
      * the date and restore the file. */
-    readonly trashedAt?: string;
+    readonly trashedAt?: string | null;
     readonly rawData?: SerializedData;
 }
 export declare class UpdateFileVersionByIdHeaders {

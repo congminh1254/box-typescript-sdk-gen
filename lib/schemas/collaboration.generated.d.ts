@@ -12,20 +12,21 @@ export interface CollaborationAcceptanceRequirementsStatusTermsOfServiceRequirem
     /**
      * Whether or not the terms of service have been accepted.  The
      * field is `null` when there is no terms of service required. */
-    readonly isAccepted?: boolean;
+    readonly isAccepted?: boolean | null;
     readonly termsOfService?: TermsOfServiceBase;
     readonly rawData?: SerializedData;
 }
 export interface CollaborationAcceptanceRequirementsStatusStrongPasswordRequirementField {
     /**
      * Whether or not the enterprise that owns the content requires
-     * a strong password to collaborate on the content. */
+     * a strong password to collaborate on the content, or enforces
+     * an exposed password detection for the external collaborators. */
     readonly enterpriseHasStrongPasswordRequiredForExternalUsers?: boolean;
     /**
-     * Whether or not the user has a strong password set for their
-     * account. The field is `null` when a strong password is not
-     * required. */
-    readonly userHasStrongPassword?: boolean;
+     * Whether or not the user has a strong and not exposed password set
+     * for their account. The field is `null` when a strong password is
+     * not required. */
+    readonly userHasStrongPassword?: boolean | null;
     readonly rawData?: SerializedData;
 }
 export interface CollaborationAcceptanceRequirementsStatusTwoFactorAuthenticationRequirementField {
@@ -38,7 +39,7 @@ export interface CollaborationAcceptanceRequirementsStatusTwoFactorAuthenticatio
      * Whether or not the user has two-factor authentication
      * enabled. The field is `null` when two-factor
      * authentication is not required. */
-    readonly userHasTwoFactorAuthenticationEnabled?: boolean;
+    readonly userHasTwoFactorAuthenticationEnabled?: boolean | null;
     readonly rawData?: SerializedData;
 }
 export interface CollaborationAcceptanceRequirementsStatusField {
@@ -54,20 +55,20 @@ export declare class Collaboration {
     /**
      * `collaboration` */
     readonly type: CollaborationTypeField;
-    readonly item?: FileOrFolderOrWebLink;
-    readonly appItem?: AppItem;
+    readonly item?: FileOrFolderOrWebLink | null;
+    readonly appItem?: AppItem | null;
     readonly accessibleBy?: GroupMiniOrUserCollaborations;
     /**
      * The email address used to invite an unregistered collaborator, if
      * they are not a registered user. */
-    readonly inviteEmail?: string;
+    readonly inviteEmail?: string | null;
     /**
      * The level of access granted. */
     readonly role?: CollaborationRoleField;
     /**
      * When the collaboration will expire, or `null` if no expiration
      * date is set. */
-    readonly expiresAt?: DateTime;
+    readonly expiresAt?: DateTime | null;
     /**
      * If set to `true`, collaborators have access to
      * shared items, but such items won't be visible in the
@@ -101,20 +102,20 @@ export interface CollaborationInput {
     /**
      * `collaboration` */
     readonly type?: CollaborationTypeField;
-    readonly item?: FileOrFolderOrWebLink;
-    readonly appItem?: AppItem;
+    readonly item?: FileOrFolderOrWebLink | null;
+    readonly appItem?: AppItem | null;
     readonly accessibleBy?: GroupMiniOrUserCollaborations;
     /**
      * The email address used to invite an unregistered collaborator, if
      * they are not a registered user. */
-    readonly inviteEmail?: string;
+    readonly inviteEmail?: string | null;
     /**
      * The level of access granted. */
     readonly role?: CollaborationRoleField;
     /**
      * When the collaboration will expire, or `null` if no expiration
      * date is set. */
-    readonly expiresAt?: DateTime;
+    readonly expiresAt?: DateTime | null;
     /**
      * If set to `true`, collaborators have access to
      * shared items, but such items won't be visible in the

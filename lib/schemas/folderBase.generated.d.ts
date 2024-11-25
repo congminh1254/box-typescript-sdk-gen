@@ -14,7 +14,7 @@ export declare class FolderBase {
      * The HTTP `etag` of this folder. This can be used within some API
      * endpoints in the `If-Match` and `If-None-Match` headers to only
      * perform changes on the folder if (no) changes have happened. */
-    readonly etag?: string;
+    readonly etag?: string | null;
     /**
      * `folder` */
     readonly type: FolderBaseTypeField;
@@ -35,7 +35,7 @@ export interface FolderBaseInput {
      * The HTTP `etag` of this folder. This can be used within some API
      * endpoints in the `If-Match` and `If-None-Match` headers to only
      * perform changes on the folder if (no) changes have happened. */
-    readonly etag?: string;
+    readonly etag?: string | null;
     /**
      * `folder` */
     readonly type?: FolderBaseTypeField;

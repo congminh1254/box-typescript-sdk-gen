@@ -53,14 +53,14 @@ export interface FolderSharedLinkField {
      * extension so that the file will be saved with the right file type.
      *
      * This property will be `null` for folders. */
-    readonly downloadUrl?: string;
+    readonly downloadUrl?: string | null;
     /**
      * The "Custom URL" that can also be used to preview the item on Box.  Custom
      * URLs can only be created or modified in the Box Web application. */
-    readonly vanityUrl?: string;
+    readonly vanityUrl?: string | null;
     /**
      * The custom name of a shared link, as used in the `vanity_url` field. */
-    readonly vanityName?: string;
+    readonly vanityName?: string | null;
     /**
      * The access level for this shared link.
      *
@@ -87,7 +87,7 @@ export interface FolderSharedLinkField {
     /**
      * The date and time when this link will be unshared. This field can only be
      * set by users with paid accounts. */
-    readonly unsharedAt?: DateTime;
+    readonly unsharedAt?: DateTime | null;
     /**
      * Defines if the shared link requires a password to access the item. */
     readonly isPasswordEnabled: boolean;
@@ -128,21 +128,21 @@ export interface FolderFolderUploadEmailField {
 }
 export type FolderItemStatusField = 'active' | 'trashed' | 'deleted';
 export declare class Folder extends FolderMini {
-    readonly createdAt?: DateTime;
-    readonly modifiedAt?: DateTime;
+    readonly createdAt?: DateTime | null;
+    readonly modifiedAt?: DateTime | null;
     readonly description?: string;
     readonly size?: number;
     readonly pathCollection?: FolderPathCollectionField;
     readonly createdBy?: UserMini;
     readonly modifiedBy?: UserMini;
-    readonly trashedAt?: DateTime;
-    readonly purgedAt?: DateTime;
-    readonly contentCreatedAt?: DateTime;
-    readonly contentModifiedAt?: DateTime;
+    readonly trashedAt?: DateTime | null;
+    readonly purgedAt?: DateTime | null;
+    readonly contentCreatedAt?: DateTime | null;
+    readonly contentModifiedAt?: DateTime | null;
     readonly ownedBy?: UserMini;
-    readonly sharedLink?: FolderSharedLinkField;
-    readonly folderUploadEmail?: FolderFolderUploadEmailField;
-    readonly parent?: FolderMini;
+    readonly sharedLink?: FolderSharedLinkField | null;
+    readonly folderUploadEmail?: FolderFolderUploadEmailField | null;
+    readonly parent?: FolderMini | null;
     readonly itemStatus?: FolderItemStatusField;
     readonly itemCollection?: Items;
     constructor(fields: Folder);

@@ -14,7 +14,7 @@ export declare class FileBase {
      * The HTTP `etag` of this file. This can be used within some API
      * endpoints in the `If-Match` and `If-None-Match` headers to only
      * perform changes on the file if (no) changes have happened. */
-    readonly etag?: string;
+    readonly etag?: string | null;
     /**
      * `file` */
     readonly type: FileBaseTypeField;
@@ -35,7 +35,7 @@ export interface FileBaseInput {
      * The HTTP `etag` of this file. This can be used within some API
      * endpoints in the `If-Match` and `If-None-Match` headers to only
      * perform changes on the file if (no) changes have happened. */
-    readonly etag?: string;
+    readonly etag?: string | null;
     /**
      * `file` */
     readonly type?: FileBaseTypeField;

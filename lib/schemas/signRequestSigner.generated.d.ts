@@ -12,7 +12,7 @@ export interface SignRequestSignerSignerDecisionField {
     readonly finalizedAt?: DateTime;
     /**
      * Additional info about the decision, such as the decline reason from the signer. */
-    readonly additionalInfo?: string;
+    readonly additionalInfo?: string | null;
     readonly rawData?: SerializedData;
 }
 export type SignRequestSigner = SignRequestCreateSigner & {
@@ -21,11 +21,11 @@ export type SignRequestSigner = SignRequestCreateSigner & {
     readonly hasViewedDocument?: boolean;
     /**
      * Final decision made by the signer. */
-    readonly signerDecision?: SignRequestSignerSignerDecisionField;
+    readonly signerDecision?: SignRequestSignerSignerDecisionField | null;
     readonly inputs?: readonly SignRequestSignerInput[];
     /**
      * URL to direct a signer to for signing */
-    readonly embedUrl?: string;
+    readonly embedUrl?: string | null;
     /**
      * This URL is specifically designed for
      * signing documents within an HTML `iframe` tag.
@@ -33,7 +33,7 @@ export type SignRequestSigner = SignRequestCreateSigner & {
      * only if the `embed_url_external_user_id`
      * parameter was passed in the
      * `create Box Sign request` call. */
-    readonly iframeableEmbedUrl?: string;
+    readonly iframeableEmbedUrl?: string | null;
 };
 export declare function serializeSignRequestSignerSignerDecisionTypeField(val: SignRequestSignerSignerDecisionTypeField): SerializedData;
 export declare function deserializeSignRequestSignerSignerDecisionTypeField(val: SerializedData): SignRequestSignerSignerDecisionTypeField;

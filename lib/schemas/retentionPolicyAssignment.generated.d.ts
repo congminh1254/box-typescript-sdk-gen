@@ -9,7 +9,7 @@ export interface RetentionPolicyAssignmentAssignedToField {
      * The ID of the folder, enterprise, or metadata template
      * the policy is assigned to.
      * Set to null or omit when type is set to enterprise. */
-    readonly id?: string;
+    readonly id?: string | null;
     /**
      * The type of resource the policy is assigned to. */
     readonly type?: RetentionPolicyAssignmentAssignedToTypeField;
@@ -18,11 +18,11 @@ export interface RetentionPolicyAssignmentAssignedToField {
 export interface RetentionPolicyAssignmentFilterFieldsField {
     /**
      * The metadata attribute key id. */
-    readonly field?: string;
+    readonly field?: string | null;
     /**
      * The metadata attribute field id. For value, only
      * enum and multiselect types are supported. */
-    readonly value?: string;
+    readonly value?: string | null;
     readonly rawData?: SerializedData;
 }
 export declare class RetentionPolicyAssignment {
@@ -41,7 +41,7 @@ export declare class RetentionPolicyAssignment {
     /**
      * An array of field objects. Values are only returned if the `assigned_to`
      * type is `metadata_template`. Otherwise, the array is blank. */
-    readonly filterFields?: readonly RetentionPolicyAssignmentFilterFieldsField[];
+    readonly filterFields?: readonly RetentionPolicyAssignmentFilterFieldsField[] | null;
     readonly assignedBy?: UserMini;
     /**
      * When the retention policy assignment object was
@@ -71,7 +71,7 @@ export interface RetentionPolicyAssignmentInput {
     /**
      * An array of field objects. Values are only returned if the `assigned_to`
      * type is `metadata_template`. Otherwise, the array is blank. */
-    readonly filterFields?: readonly RetentionPolicyAssignmentFilterFieldsField[];
+    readonly filterFields?: readonly RetentionPolicyAssignmentFilterFieldsField[] | null;
     readonly assignedBy?: UserMini;
     /**
      * When the retention policy assignment object was

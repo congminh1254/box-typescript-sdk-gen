@@ -107,3 +107,9 @@ export declare function delayInSeconds(seconds: number): Promise<void>;
  * @returns Value from object raw data.
  */
 export declare function getValueFromObjectRawData(obj: any, key: string): any;
+/**
+ * Create a null value.
+ *
+ * @returns null
+ */
+export declare function createNull(): null;

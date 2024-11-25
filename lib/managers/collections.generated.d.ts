@@ -1,5 +1,5 @@
 import { Collections } from '../schemas/collections.generated.js';
-import { Items } from '../schemas/items.generated.js';
+import { ItemsOffsetPaginated } from '../schemas/itemsOffsetPaginated.generated.js';
 import { Collection } from '../schemas/collection.generated.js';
 import { Authentication } from '../networking/auth.generated.js';
 import { NetworkSession } from '../networking/network.generated.js';
@@ -136,9 +136,9 @@ export declare class CollectionsManager {
        * @param {string} collectionId The ID of the collection.
       Example: "926489"
        * @param {GetCollectionItemsOptionalsInput} optionalsInput
-       * @returns {Promise<Items>}
+       * @returns {Promise<ItemsOffsetPaginated>}
        */
-    getCollectionItems(collectionId: string, optionalsInput?: GetCollectionItemsOptionalsInput): Promise<Items>;
+    getCollectionItems(collectionId: string, optionalsInput?: GetCollectionItemsOptionalsInput): Promise<ItemsOffsetPaginated>;
     /**
        * Retrieves a collection by its ID.
        * @param {string} collectionId The ID of the collection.

@@ -11,7 +11,7 @@ export interface FolderLocks {
     readonly limit?: string;
     /**
      * The marker for the start of the next page of results. */
-    readonly nextMarker?: string;
+    readonly nextMarker?: string | null;
     readonly rawData?: SerializedData;
 }
 export declare function serializeFolderLocks(val: FolderLocks): SerializedData;

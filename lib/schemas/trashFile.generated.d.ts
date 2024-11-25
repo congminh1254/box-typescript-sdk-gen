@@ -14,10 +14,10 @@ export interface TrashFilePathCollectionEntriesField {
     readonly id?: string;
     /**
      * This field is null for the Trash folder */
-    readonly sequenceId?: string;
+    readonly sequenceId?: string | null;
     /**
      * This field is null for the Trash folder */
-    readonly etag?: string;
+    readonly etag?: string | null;
     /**
      * The name of the Trash folder. */
     readonly name?: string;
@@ -47,7 +47,7 @@ export declare class TrashFile {
      * The HTTP `etag` of this file. This can be used within some API
      * endpoints in the `If-Match` and `If-None-Match` headers to only
      * perform changes on the file if (no) changes have happened. */
-    readonly etag?: string;
+    readonly etag?: string | null;
     /**
      * `file` */
     readonly type: TrashFileTypeField;
@@ -76,19 +76,19 @@ export declare class TrashFile {
     readonly modifiedAt: DateTime;
     /**
      * The time at which this file was put in the trash. */
-    readonly trashedAt?: DateTime;
+    readonly trashedAt?: DateTime | null;
     /**
      * The time at which this file is expected to be purged
      * from the trash. */
-    readonly purgedAt?: DateTime;
+    readonly purgedAt?: DateTime | null;
     /**
      * The date and time at which this file was originally
      * created, which might be before it was uploaded to Box. */
-    readonly contentCreatedAt?: DateTime;
+    readonly contentCreatedAt?: DateTime | null;
     /**
      * The date and time at which this file was last updated,
      * which might be before it was uploaded to Box. */
-    readonly contentModifiedAt?: DateTime;
+    readonly contentModifiedAt?: DateTime | null;
     readonly createdBy?: UserMini;
     readonly modifiedBy: UserMini;
     readonly ownedBy: UserMini;
@@ -96,7 +96,7 @@ export declare class TrashFile {
      * The shared link for this file. This will
      * be `null` if a file has been trashed, since the link will no longer
      * be active. */
-    readonly sharedLink?: string;
+    readonly sharedLink?: string | null;
     readonly parent?: FolderMini;
     /**
      * Defines if this item has been deleted or not.
@@ -122,7 +122,7 @@ export interface TrashFileInput {
      * The HTTP `etag` of this file. This can be used within some API
      * endpoints in the `If-Match` and `If-None-Match` headers to only
      * perform changes on the file if (no) changes have happened. */
-    readonly etag?: string;
+    readonly etag?: string | null;
     /**
      * `file` */
     readonly type?: TrashFileTypeField;
@@ -151,19 +151,19 @@ export interface TrashFileInput {
     readonly modifiedAt: DateTime;
     /**
      * The time at which this file was put in the trash. */
-    readonly trashedAt?: DateTime;
+    readonly trashedAt?: DateTime | null;
     /**
      * The time at which this file is expected to be purged
      * from the trash. */
-    readonly purgedAt?: DateTime;
+    readonly purgedAt?: DateTime | null;
     /**
      * The date and time at which this file was originally
      * created, which might be before it was uploaded to Box. */
-    readonly contentCreatedAt?: DateTime;
+    readonly contentCreatedAt?: DateTime | null;
     /**
      * The date and time at which this file was last updated,
      * which might be before it was uploaded to Box. */
-    readonly contentModifiedAt?: DateTime;
+    readonly contentModifiedAt?: DateTime | null;
     readonly createdBy?: UserMini;
     readonly modifiedBy: UserMini;
     readonly ownedBy: UserMini;
@@ -171,7 +171,7 @@ export interface TrashFileInput {
      * The shared link for this file. This will
      * be `null` if a file has been trashed, since the link will no longer
      * be active. */
-    readonly sharedLink?: string;
+    readonly sharedLink?: string | null;
     readonly parent?: FolderMini;
     /**
      * Defines if this item has been deleted or not.

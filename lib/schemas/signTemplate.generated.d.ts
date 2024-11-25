@@ -26,17 +26,17 @@ export interface SignTemplateReadySignLinkField {
     readonly url?: string;
     /**
      * Request name. */
-    readonly name?: string;
+    readonly name?: string | null;
     /**
      * Extra instructions for all signers. */
-    readonly instructions?: string;
+    readonly instructions?: string | null;
     /**
      * The destination folder to place final,
      * signed document and signing
      * log. Only `ID` and `type` fields are required.
      * The root folder,
      * folder ID `0`, cannot be used. */
-    readonly folderId?: string;
+    readonly folderId?: string | null;
     /**
      * Whether to disable notifications when
      * a signer has signed. */
@@ -49,16 +49,16 @@ export interface SignTemplateReadySignLinkField {
 export interface SignTemplateCustomBrandingField {
     /**
      * Name of the company */
-    readonly companyName?: string;
+    readonly companyName?: string | null;
     /**
      * Custom branding logo URI in the form of a base64 image. */
-    readonly logoUri?: string;
+    readonly logoUri?: string | null;
     /**
      * Custom branding color in hex. */
-    readonly brandingColor?: string;
+    readonly brandingColor?: string | null;
     /**
      * Content of the email footer. */
-    readonly emailFooterText?: string;
+    readonly emailFooterText?: string | null;
     readonly rawData?: SerializedData;
 }
 export interface SignTemplate {
@@ -70,16 +70,16 @@ export interface SignTemplate {
     readonly id?: string;
     /**
      * The name of the template. */
-    readonly name?: string;
+    readonly name?: string | null;
     /**
      * Subject of signature request email. This is cleaned by sign request. If this field is not passed, a default subject will be used. */
-    readonly emailSubject?: string;
+    readonly emailSubject?: string | null;
     /**
      * Message to include in signature request email. The field is cleaned through sanitization of specific characters. However, some html tags are allowed. Links included in the message are also converted to hyperlinks in the email. The message may contain the following html tags including `a`, `abbr`, `acronym`, `b`, `blockquote`, `code`, `em`, `i`, `ul`, `li`, `ol`, and `strong`. Be aware that when the text to html ratio is too high, the email may end up in spam filters. Custom styles on these tags are not allowed. If this field is not passed, a default message will be used. */
-    readonly emailMessage?: string;
+    readonly emailMessage?: string | null;
     /**
      * Set the number of days after which the created signature request will automatically expire if not completed. By default, we do not apply any expiration date on signature requests, and the signature request does not expire. */
-    readonly daysValid?: number;
+    readonly daysValid?: number | null;
     readonly parentFolder?: FolderMini;
     /**
      * List of files to create a signing document from. Only the ID and type fields are required for each file. */
@@ -113,11 +113,11 @@ export interface SignTemplate {
     readonly additionalInfo?: SignTemplateAdditionalInfoField;
     /**
      * Box's ready-sign link feature enables you to create a link to a signature request that you've created from a template. Use this link when you want to post a signature request on a public form — such as an email, social media post, or web page — without knowing who the signers will be. Note: The ready-sign link feature is limited to Enterprise Plus customers and not available to Box Verified Enterprises. */
-    readonly readySignLink?: SignTemplateReadySignLinkField;
+    readonly readySignLink?: SignTemplateReadySignLinkField | null;
     /**
      * Custom branding applied to notifications
      * and signature requests. */
-    readonly customBranding?: SignTemplateCustomBrandingField;
+    readonly customBranding?: SignTemplateCustomBrandingField | null;
     readonly rawData?: SerializedData;
 }
 export declare function serializeSignTemplateTypeField(val: SignTemplateTypeField): SerializedData;

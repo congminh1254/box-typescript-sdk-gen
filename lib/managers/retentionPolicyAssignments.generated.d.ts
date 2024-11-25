@@ -104,7 +104,7 @@ export interface CreateRetentionPolicyAssignmentRequestBodyAssignToField {
      * The ID of item to assign the policy to.
      * Set to `null` or omit when `type` is set to
      * `enterprise`. */
-    readonly id?: string;
+    readonly id?: string | null;
     readonly rawData?: SerializedData;
 }
 export interface CreateRetentionPolicyAssignmentRequestBodyFilterFieldsField {

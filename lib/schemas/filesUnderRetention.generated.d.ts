@@ -8,10 +8,10 @@ export interface FilesUnderRetention {
     readonly limit?: number;
     /**
      * The marker for the start of the next page of results. */
-    readonly nextMarker?: string;
+    readonly nextMarker?: string | null;
     /**
      * The marker for the start of the previous page of results. */
-    readonly prevMarker?: string;
+    readonly prevMarker?: string | null;
     /**
      * A list of files */
     readonly entries?: readonly FileMini[];

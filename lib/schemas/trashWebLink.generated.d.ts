@@ -13,10 +13,10 @@ export interface TrashWebLinkPathCollectionEntriesField {
     readonly id?: string;
     /**
      * This field is null for the Trash folder */
-    readonly sequenceId?: string;
+    readonly sequenceId?: string | null;
     /**
      * This field is null for the Trash folder */
-    readonly etag?: string;
+    readonly etag?: string | null;
     /**
      * The name of the Trash folder. */
     readonly name?: string;
@@ -65,10 +65,10 @@ export interface TrashWebLink {
     readonly modifiedAt?: DateTime;
     /**
      * When this file was last moved to the trash. */
-    readonly trashedAt?: DateTime;
+    readonly trashedAt?: DateTime | null;
     /**
      * When this file will be permanently deleted. */
-    readonly purgedAt?: DateTime;
+    readonly purgedAt?: DateTime | null;
     readonly createdBy?: UserMini;
     readonly modifiedBy?: UserMini;
     readonly ownedBy?: UserMini;
@@ -76,7 +76,7 @@ export interface TrashWebLink {
      * The shared link for this bookmark. This will
      * be `null` if a bookmark has been trashed, since the link will no longer
      * be active. */
-    readonly sharedLink?: string;
+    readonly sharedLink?: string | null;
     /**
      * Whether this item is deleted or not. Values include `active`,
      * `trashed` if the file has been moved to the trash, and `deleted` if

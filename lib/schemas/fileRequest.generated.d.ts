@@ -24,7 +24,7 @@ export declare class FileRequest {
      *
      * This defaults to description of the file request that was
      * copied to create this file request. */
-    readonly description?: string;
+    readonly description?: string | null;
     /**
      * The status of the file request. This defaults
      * to `active`.
@@ -75,7 +75,7 @@ export declare class FileRequest {
      * header, a change will only be performed on the  file request if the `etag`
      * on the file request still matches the `etag` provided in the `If-Match`
      * header. */
-    readonly etag?: string;
+    readonly etag?: string | null;
     readonly createdBy?: UserMini;
     /**
      * The date and time when the file request was created. */
@@ -107,7 +107,7 @@ export interface FileRequestInput {
      *
      * This defaults to description of the file request that was
      * copied to create this file request. */
-    readonly description?: string;
+    readonly description?: string | null;
     /**
      * The status of the file request. This defaults
      * to `active`.
@@ -158,7 +158,7 @@ export interface FileRequestInput {
      * header, a change will only be performed on the  file request if the `etag`
      * on the file request still matches the `etag` provided in the `If-Match`
      * header. */
-    readonly etag?: string;
+    readonly etag?: string | null;
     readonly createdBy?: UserMini;
     /**
      * The date and time when the file request was created. */
