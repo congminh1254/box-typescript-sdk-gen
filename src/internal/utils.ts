@@ -211,7 +211,8 @@ export async function* iterateChunks(
   let totalSize = 0;
   let consumedSize = 0;
   while (consumedSize < fileSize && !stream.readableEnded) {
-    for await (const data of stream) {
+    for await (const chunk of stream) {
+      const data = Buffer.isBuffer(chunk) ? chunk : Buffer.from(chunk);
       if (!Buffer.isBuffer(data)) {
         throw new Error('Expecting a chunk of stream to be a Buffer');
       }
