@@ -150,25 +150,6 @@ export function generateByteStreamFromBuffer(
     : eval('require')('stream').Readable.from(Buffer.from(buffer));
 }
 
-function readableStreamToNodeReadable(stream: ReadableStream<Uint8Array>): Readable {
-  const reader = stream.getReader();
-
-  return new Readable({
-      async read() {
-          try {
-              const { done, value } = await reader.read();
-              if (done) {
-                  this.push(null); // End the stream
-              } else {
-                  this.push(Buffer.from(value)); // Push the chunk
-              }
-          } catch (error: any) {
-              this.destroy(error); // Handle any errors
-          }
-      },
-  });
-}
-
 export function generateByteStream(size: number): Readable {
   return generateByteStreamFromBuffer(generateByteBuffer(size));
 }
