@@ -119,6 +119,18 @@ export class Hash {
   }
 
   async digestHash(encoding: DigestHashType = 'base64'): Promise<string> {
+    if (isBrowser()) {
+      if (!this.#hash) {
+        await this.initializeBrowserHash();
+      }
+      const d = this.#hash.digest('binary');
+      switch(encoding) {
+        case 'base64':
+          return Buffer.from(d).toString('base64');
+        default:
+          throw new Error(`Unsupported encoding: ${encoding}`);
+      }
+    }
     return this.#hash.digest(encoding);
   }
 }
