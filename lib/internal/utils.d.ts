@@ -1,5 +1,5 @@
 import { Buffer } from 'buffer';
-import { Readable } from 'stream';
+import type { Readable } from 'stream';
 export declare function isBrowser(): false | Crypto;
 export declare function getUuid(): string;
 export declare function decodeBase64(value: string): string;

@@ -1,5 +1,5 @@
 import { Buffer } from 'buffer';
-import { Readable } from 'stream';
+import type { Readable } from 'stream';
 import { v4 as uuidv4 } from 'uuid';
 import { SignJWT, importPKCS8 } from 'jose';
 import { createSHA1 } from 'hash-wasm';
