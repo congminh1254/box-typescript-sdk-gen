@@ -1,5 +1,5 @@
 import { Buffer } from 'buffer';
-import type { Readable } from 'stream';
+import { Readable } from 'stream';
 import { v4 as uuidv4 } from 'uuid';
 import { SignJWT, importPKCS8 } from 'jose';
 import { createSHA1 } from 'hash-wasm';
@@ -83,6 +83,7 @@ export function hexStrToBase64(hex: string) {
 }
 
 export type HashName = 'sha1';
+export type DigestHashType = 'base64';
 
 export class Hash {
   #hash: any;
@@ -117,7 +118,7 @@ export class Hash {
     this.#hash.update(data);
   }
 
-  async digestHash(encoding: 'base64'): Promise<string> {
+  async digestHash(encoding: DigestHashType = 'base64'): Promise<string> {
     return this.#hash.digest(encoding);
   }
 }
@@ -147,6 +148,25 @@ export function generateByteStreamFromBuffer(
         },
       })
     : eval('require')('stream').Readable.from(Buffer.from(buffer));
+}
+
+function readableStreamToNodeReadable(stream: ReadableStream<Uint8Array>): Readable {
+  const reader = stream.getReader();
+
+  return new Readable({
+      async read() {
+          try {
+              const { done, value } = await reader.read();
+              if (done) {
+                  this.push(null); // End the stream
+              } else {
+                  this.push(Buffer.from(value)); // Push the chunk
+              }
+          } catch (error: any) {
+              this.destroy(error); // Handle any errors
+          }
+      },
+  });
 }
 
 export function generateByteStream(size: number): Readable {

@@ -1,52 +1,52 @@
-import { serializeFileFull } from '../schemas/fileFull.generated.js';
-import { deserializeFileFull } from '../schemas/fileFull.generated.js';
-import { serializeUploadSession } from '../schemas/uploadSession.generated.js';
-import { deserializeUploadSession } from '../schemas/uploadSession.generated.js';
-import { serializeClientError } from '../schemas/clientError.generated.js';
-import { deserializeClientError } from '../schemas/clientError.generated.js';
-import { serializeUploadedPart } from '../schemas/uploadedPart.generated.js';
-import { deserializeUploadedPart } from '../schemas/uploadedPart.generated.js';
-import { serializeUploadParts } from '../schemas/uploadParts.generated.js';
-import { deserializeUploadParts } from '../schemas/uploadParts.generated.js';
-import { serializeFiles } from '../schemas/files.generated.js';
-import { deserializeFiles } from '../schemas/files.generated.js';
-import { serializeUploadPart } from '../schemas/uploadPart.generated.js';
-import { deserializeUploadPart } from '../schemas/uploadPart.generated.js';
-import { Buffer } from '../internal/utils.js';
-import { HashName } from '../internal/utils.js';
-import { FileFull } from '../schemas/fileFull.generated.js';
-import { Iterator } from '../internal/utils.js';
-import { UploadSession } from '../schemas/uploadSession.generated.js';
-import { ClientError } from '../schemas/clientError.generated.js';
-import { UploadedPart } from '../schemas/uploadedPart.generated.js';
-import { UploadParts } from '../schemas/uploadParts.generated.js';
-import { Files } from '../schemas/files.generated.js';
-import { UploadPart } from '../schemas/uploadPart.generated.js';
-import { Authentication } from '../networking/auth.generated.js';
-import { NetworkSession } from '../networking/network.generated.js';
-import { prepareParams } from '../internal/utils.js';
-import { toString } from '../internal/utils.js';
-import { ByteStream } from '../internal/utils.js';
-import { CancellationToken } from '../internal/utils.js';
-import { FetchOptions } from '../networking/fetch.js';
-import { FetchResponse } from '../networking/fetch.js';
-import { fetch } from '../networking/fetch.js';
-import { SerializedData } from '../serialization/json.js';
-import { sdToJson } from '../serialization/json.js';
-import { generateByteStreamFromBuffer } from '../internal/utils.js';
-import { hexToBase64 } from '../internal/utils.js';
-import { iterateChunks } from '../internal/utils.js';
-import { readByteStream } from '../internal/utils.js';
-import { reduceIterator } from '../internal/utils.js';
-import { Hash } from '../internal/utils.js';
-import { bufferLength } from '../internal/utils.js';
-import { BoxSdkError } from '../box/errors.js';
-import { sdIsEmpty } from '../serialization/json.js';
-import { sdIsBoolean } from '../serialization/json.js';
-import { sdIsNumber } from '../serialization/json.js';
-import { sdIsString } from '../serialization/json.js';
-import { sdIsList } from '../serialization/json.js';
-import { sdIsMap } from '../serialization/json.js';
+import { serializeFileFull } from '../schemas/fileFull.generated';
+import { deserializeFileFull } from '../schemas/fileFull.generated';
+import { serializeUploadSession } from '../schemas/uploadSession.generated';
+import { deserializeUploadSession } from '../schemas/uploadSession.generated';
+import { serializeClientError } from '../schemas/clientError.generated';
+import { deserializeClientError } from '../schemas/clientError.generated';
+import { serializeUploadedPart } from '../schemas/uploadedPart.generated';
+import { deserializeUploadedPart } from '../schemas/uploadedPart.generated';
+import { serializeUploadParts } from '../schemas/uploadParts.generated';
+import { deserializeUploadParts } from '../schemas/uploadParts.generated';
+import { serializeFiles } from '../schemas/files.generated';
+import { deserializeFiles } from '../schemas/files.generated';
+import { serializeUploadPart } from '../schemas/uploadPart.generated';
+import { deserializeUploadPart } from '../schemas/uploadPart.generated';
+import { Buffer } from '../internal/utils';
+import { HashName } from '../internal/utils';
+import { FileFull } from '../schemas/fileFull.generated';
+import { Iterator } from '../internal/utils';
+import { UploadSession } from '../schemas/uploadSession.generated';
+import { ClientError } from '../schemas/clientError.generated';
+import { UploadedPart } from '../schemas/uploadedPart.generated';
+import { UploadParts } from '../schemas/uploadParts.generated';
+import { Files } from '../schemas/files.generated';
+import { UploadPart } from '../schemas/uploadPart.generated';
+import { Authentication } from '../networking/auth.generated';
+import { NetworkSession } from '../networking/network.generated';
+import { prepareParams } from '../internal/utils';
+import { toString } from '../internal/utils';
+import { ByteStream } from '../internal/utils';
+import { CancellationToken } from '../internal/utils';
+import { FetchOptions } from '../networking/fetch';
+import { FetchResponse } from '../networking/fetch';
+import { fetch } from '../networking/fetch';
+import { SerializedData } from '../serialization/json';
+import { sdToJson } from '../serialization/json';
+import { generateByteStreamFromBuffer } from '../internal/utils';
+import { hexToBase64 } from '../internal/utils';
+import { iterateChunks } from '../internal/utils';
+import { readByteStream } from '../internal/utils';
+import { reduceIterator } from '../internal/utils';
+import { Hash } from '../internal/utils';
+import { bufferLength } from '../internal/utils';
+import { BoxSdkError } from '../box/errors';
+import { sdIsEmpty } from '../serialization/json';
+import { sdIsBoolean } from '../serialization/json';
+import { sdIsNumber } from '../serialization/json';
+import { sdIsString } from '../serialization/json';
+import { sdIsList } from '../serialization/json';
+import { sdIsMap } from '../serialization/json';
 export class CreateFileUploadSessionOptionals {
   readonly headers: CreateFileUploadSessionHeaders =
     new CreateFileUploadSessionHeaders({});
@@ -1177,8 +1177,8 @@ export class ChunkedUploadsManager {
       readonly [key: string]: string;
     } = prepareParams({
       ...{
-        ['digest']: toString(headers.digest) as string,
-        ['content-range']: toString(headers.contentRange) as string,
+        'digest': toString(headers.digest) as string,
+        'content-range': toString(headers.contentRange) as string,
       },
       ...headers.extraHeaders,
     });
@@ -1229,8 +1229,8 @@ export class ChunkedUploadsManager {
       readonly [key: string]: string;
     } = prepareParams({
       ...{
-        ['digest']: toString(headers.digest) as string,
-        ['content-range']: toString(headers.contentRange) as string,
+        'digest': toString(headers.digest) as string,
+        'content-range': toString(headers.contentRange) as string,
       },
       ...headers.extraHeaders,
     });
@@ -1360,8 +1360,8 @@ export class ChunkedUploadsManager {
     const queryParamsMap: {
       readonly [key: string]: string;
     } = prepareParams({
-      ['offset']: toString(queryParams.offset) as string,
-      ['limit']: toString(queryParams.limit) as string,
+      'offset': toString(queryParams.offset) as string,
+      'limit': toString(queryParams.limit) as string,
     });
     const headersMap: {
       readonly [key: string]: string;
@@ -1407,8 +1407,8 @@ export class ChunkedUploadsManager {
     const queryParamsMap: {
       readonly [key: string]: string;
     } = prepareParams({
-      ['offset']: toString(queryParams.offset) as string,
-      ['limit']: toString(queryParams.limit) as string,
+      'offset': toString(queryParams.offset) as string,
+      'limit': toString(queryParams.limit) as string,
     });
     const headersMap: {
       readonly [key: string]: string;
@@ -1468,9 +1468,9 @@ export class ChunkedUploadsManager {
       readonly [key: string]: string;
     } = prepareParams({
       ...{
-        ['digest']: toString(headers.digest) as string,
-        ['if-match']: toString(headers.ifMatch) as string,
-        ['if-none-match']: toString(headers.ifNoneMatch) as string,
+        'digest': toString(headers.digest) as string,
+        'if-match': toString(headers.ifMatch) as string,
+        'if-none-match': toString(headers.ifNoneMatch) as string,
       },
       ...headers.extraHeaders,
     });
@@ -1527,9 +1527,9 @@ export class ChunkedUploadsManager {
       readonly [key: string]: string;
     } = prepareParams({
       ...{
-        ['digest']: toString(headers.digest) as string,
-        ['if-match']: toString(headers.ifMatch) as string,
-        ['if-none-match']: toString(headers.ifNoneMatch) as string,
+        'digest': toString(headers.digest) as string,
+        'if-match': toString(headers.ifMatch) as string,
+        'if-none-match': toString(headers.ifNoneMatch) as string,
       },
       ...headers.extraHeaders,
     });
@@ -1699,9 +1699,9 @@ export function serializeCreateFileUploadSessionRequestBody(
   val: CreateFileUploadSessionRequestBody,
 ): SerializedData {
   return {
-    ['folder_id']: val.folderId,
-    ['file_size']: val.fileSize,
-    ['file_name']: val.fileName,
+    'folder_id': val.folderId,
+    'file_size': val.fileSize,
+    'file_name': val.fileName,
   };
 }
 export function deserializeCreateFileUploadSessionRequestBody(
@@ -1760,7 +1760,7 @@ export function deserializeCreateFileUploadSessionRequestBody(
 export function serializeCreateFileUploadSessionForExistingFileRequestBody(
   val: CreateFileUploadSessionForExistingFileRequestBody,
 ): SerializedData {
-  return { ['file_size']: val.fileSize, ['file_name']: val.fileName };
+  return { 'file_size': val.fileSize, 'file_name': val.fileName };
 }
 export function deserializeCreateFileUploadSessionForExistingFileRequestBody(
   val: SerializedData,
@@ -1801,7 +1801,7 @@ export function serializeCreateFileUploadSessionCommitByUrlRequestBody(
   val: CreateFileUploadSessionCommitByUrlRequestBody,
 ): SerializedData {
   return {
-    ['parts']: val.parts.map(function (item: UploadPart): SerializedData {
+    'parts': val.parts.map(function (item: UploadPart): SerializedData {
       return serializeUploadPart(item);
     }) as readonly any[],
   };
@@ -1840,7 +1840,7 @@ export function serializeCreateFileUploadSessionCommitRequestBody(
   val: CreateFileUploadSessionCommitRequestBody,
 ): SerializedData {
   return {
-    ['parts']: val.parts.map(function (item: UploadPart): SerializedData {
+    'parts': val.parts.map(function (item: UploadPart): SerializedData {
       return serializeUploadPart(item);
     }) as readonly any[],
   };

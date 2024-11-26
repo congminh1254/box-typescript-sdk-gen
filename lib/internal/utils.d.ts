@@ -1,5 +1,5 @@
 import { Buffer } from 'buffer';
-import type { Readable } from 'stream';
+import { Readable } from 'stream';
 export declare function isBrowser(): false | Crypto;
 export declare function getUuid(): string;
 export declare function decodeBase64(value: string): string;
@@ -25,6 +25,7 @@ export declare function dateTimeToString(dateTime: DateTimeWrapper): string;
 export { dateToString as serializeDate, dateFromString as deserializeDate, dateTimeToString as serializeDateTime, dateTimeFromString as deserializeDateTime, };
 export declare function hexStrToBase64(hex: string): string;
 export type HashName = 'sha1';
+export type DigestHashType = 'base64';
 export declare class Hash {
     #private;
     algorithm: HashName;
@@ -33,7 +34,7 @@ export declare class Hash {
     });
     initializeBrowserHash(): Promise<void>;
     updateHash(data: Buffer): Promise<void>;
-    digestHash(encoding: 'base64'): Promise<string>;
+    digestHash(encoding?: DigestHashType): Promise<string>;
 }
 export declare function getEnvVar(name: string): string;
 export declare function generateByteBuffer(size: number): Buffer;

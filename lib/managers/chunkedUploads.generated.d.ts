@@ -1,14 +1,14 @@
-import { FileFull } from '../schemas/fileFull.generated.js';
-import { UploadSession } from '../schemas/uploadSession.generated.js';
-import { UploadedPart } from '../schemas/uploadedPart.generated.js';
-import { UploadParts } from '../schemas/uploadParts.generated.js';
-import { Files } from '../schemas/files.generated.js';
-import { UploadPart } from '../schemas/uploadPart.generated.js';
-import { Authentication } from '../networking/auth.generated.js';
-import { NetworkSession } from '../networking/network.generated.js';
-import { ByteStream } from '../internal/utils.js';
-import { CancellationToken } from '../internal/utils.js';
-import { SerializedData } from '../serialization/json.js';
+import { FileFull } from '../schemas/fileFull.generated';
+import { UploadSession } from '../schemas/uploadSession.generated';
+import { UploadedPart } from '../schemas/uploadedPart.generated';
+import { UploadParts } from '../schemas/uploadParts.generated';
+import { Files } from '../schemas/files.generated';
+import { UploadPart } from '../schemas/uploadPart.generated';
+import { Authentication } from '../networking/auth.generated';
+import { NetworkSession } from '../networking/network.generated';
+import { ByteStream } from '../internal/utils';
+import { CancellationToken } from '../internal/utils';
+import { SerializedData } from '../serialization/json';
 export declare class CreateFileUploadSessionOptionals {
     readonly headers: CreateFileUploadSessionHeaders;
     readonly cancellationToken?: CancellationToken;
