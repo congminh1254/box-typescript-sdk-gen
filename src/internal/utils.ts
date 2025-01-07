@@ -14,7 +14,7 @@ export function evalRequire(lib: string) {
   if (isBrowser()) {
     throw new Error('This method is not usable in the browser');
   }
-  return require(lib);
+  return require(`${lib}`);
 }
 
 export function getUuid() {
