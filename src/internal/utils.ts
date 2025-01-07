@@ -10,6 +10,13 @@ export function isBrowser() {
   );
 }
 
+export function evalRequire(lib: string) {
+  if (isBrowser()) {
+    throw new Error('This method is not usable in the browser');
+  }
+  return require(lib);
+}
+
 export function getUuid() {
   return uuidv4();
 }
@@ -102,7 +109,7 @@ export class Hash {
     if (isBrowser()) {
       this.#hash = undefined;
     } else {
-      this.#hash = eval('require')('crypto').createHash(algorithm);
+      this.#hash = evalRequire('crypto').createHash(algorithm);
     }
   }
 
@@ -153,12 +160,12 @@ export function generateByteBuffer(size: number): Buffer {
     window.crypto.getRandomValues(buffer);
     return Buffer.from(buffer);
   }
-  const crypto = eval('require')('crypto');
+  const crypto = evalRequire('crypto');
   return crypto.randomBytes(size);
 }
 
 export function generateByteStreamFromBuffer(
-  buffer: Buffer | ArrayBuffer,
+  buffer: Buffer | ArrayBuffer
 ): Readable {
   return isBrowser()
     ? new ReadableStream<Uint8Array>({
@@ -167,7 +174,7 @@ export function generateByteStreamFromBuffer(
           controller.close();
         },
       })
-    : eval('require')('stream').Readable.from(Buffer.from(buffer));
+    : evalRequire('stream').Readable.from(Buffer.from(buffer));
 }
 
 export function generateByteStream(size: number): Readable {
@@ -196,7 +203,7 @@ export function decodeBase64ByteStream(data: string): Readable {
           controller.close();
         },
       })
-    : eval('require')('stream').Readable.from(Buffer.from(data, 'base64'));
+    : evalRequire('stream').Readable.from(Buffer.from(data, 'base64'));
 }
 
 export function stringToByteStream(data: string): Readable {
@@ -212,7 +219,7 @@ export function stringToByteStream(data: string): Readable {
           controller.close();
         },
       })
-    : eval('require')('stream').Readable.from(Buffer.from(data, 'ascii'));
+    : evalRequire('stream').Readable.from(Buffer.from(data, 'ascii'));
 }
 
 export async function readByteStream(byteStream: Readable): Promise<Buffer> {
@@ -226,7 +233,7 @@ export async function readByteStream(byteStream: Readable): Promise<Buffer> {
 export async function* iterateChunks(
   stream: Readable,
   chunkSize: number,
-  fileSize: number,
+  fileSize: number
 ): Iterator<Readable> {
   let buffers: Buffer[] = [];
   let totalSize = 0;
@@ -250,7 +257,7 @@ export async function* iterateChunks(
       let start = 0;
       while (totalSize >= chunkSize) {
         yield generateByteStreamFromBuffer(
-          buffer.subarray(start, start + chunkSize),
+          buffer.subarray(start, start + chunkSize)
         );
         start += chunkSize;
         totalSize -= chunkSize;
@@ -262,7 +269,7 @@ export async function* iterateChunks(
 
   if (consumedSize !== fileSize) {
     throw new Error(
-      `Stream size ${consumedSize} does not match expected file size ${fileSize}`,
+      `Stream size ${consumedSize} does not match expected file size ${fileSize}`
     );
   }
   if (totalSize > 0) {
@@ -273,7 +280,7 @@ export async function* iterateChunks(
 export async function reduceIterator<T, U>(
   iterator: Iterator<T>,
   reducer: (accumulator: U, current: T) => Promise<U>,
-  initialValue: U,
+  initialValue: U
 ): Promise<U> {
   let result = initialValue;
   let iteration = await iterator.next();
@@ -294,8 +301,8 @@ export function prepareParams(map: {
   }
   return Object.fromEntries(
     Object.entries(map).filter<[string, string]>(
-      (entry): entry is [string, string] => typeof entry[1] === 'string',
-    ),
+      (entry): entry is [string, string] => typeof entry[1] === 'string'
+    )
   );
 }
 
@@ -363,9 +370,9 @@ export async function createJwtAssertion(
     readonly [key: string]: any;
   },
   key: JwtKey,
-  options: JwtSignOptions,
+  options: JwtSignOptions
 ): Promise<string> {
-  const crypto = eval('require')('crypto');
+  const crypto = evalRequire('crypto');
   const privateKey = crypto.createPrivateKey({
     key: key.key,
     format: 'pem',
@@ -394,7 +401,7 @@ export async function createJwtAssertion(
  * Reads a text file and returns its content.
  */
 export function readTextFromFile(filepath: string): string {
-  return eval('require')('fs').readFileSync(filepath, 'utf8');
+  return evalRequire('fs').readFileSync(filepath, 'utf8');
 }
 
 /**
@@ -411,7 +418,7 @@ export function createAgent(options?: AgentOptions, proxyConfig?: any): Agent {
   if (isBrowser()) {
     return undefined;
   }
-  const ProxyAgent = eval('require')('proxy-agent').ProxyAgent;
+  const ProxyAgent = evalRequire('proxy-agent').ProxyAgent;
   let agentOptions = options;
 
   if (proxyConfig && proxyConfig.url) {
@@ -427,7 +434,7 @@ export function createAgent(options?: AgentOptions, proxyConfig?: any): Agent {
     const proxyUrl = `http://${proxyAuth}${proxyHost}`;
     agentOptions = Object.assign(
       { getProxyForUrl: (url: string) => proxyUrl },
-      options || {},
+      options || {}
     );
   }
 
@@ -478,7 +485,7 @@ export function createCancellationController(): CancellationController {
 export function jsonStringifyWithEscapedUnicode(body: string) {
   return body.replace(
     /[\u007f-\uffff]/g,
-    (char) => `\\u${`0000${char.charCodeAt(0).toString(16)}`.slice(-4)}`,
+    (char) => `\\u${`0000${char.charCodeAt(0).toString(16)}`.slice(-4)}`
   );
 }
 
@@ -497,11 +504,11 @@ export async function computeWebhookSignature(
   headers: {
     [key: string]: string;
   },
-  signatureKey: string,
+  signatureKey: string
 ): Promise<string | null> {
   const escapedBody = jsonStringifyWithEscapedUnicode(body).replace(
     /\//g,
-    '\\/',
+    '\\/'
   );
   if (headers['box-signature-version'] !== '1') {
     return null;
@@ -519,7 +526,7 @@ export async function computeWebhookSignature(
     const result = await hmac.digest('binary');
     signature = Buffer.from(result).toString('base64');
   } else {
-    let crypto = eval('require')('crypto');
+    let crypto = evalRequire('crypto');
     let hmac = crypto.createHmac('sha256', signatureKey);
     hmac.update(escapedBody);
     hmac.update(headers['box-delivery-timestamp']);

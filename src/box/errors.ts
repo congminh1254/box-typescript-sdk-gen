@@ -42,7 +42,7 @@ export class BoxApiError extends BoxSdkError {
     fields: Pick<
       BoxApiError,
       'message' | 'timestamp' | 'error' | 'requestInfo' | 'responseInfo'
-    >,
+    >
   ) {
     super(fields);
     this.name = 'BoxApiError';

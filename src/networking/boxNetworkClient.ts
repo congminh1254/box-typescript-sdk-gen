@@ -5,6 +5,7 @@ import { sha1 } from 'hash-wasm'; // Use hash-wasm to calculate SHA1 hash in bro
 import { BoxApiError, BoxSdkError } from '../box/errors';
 import {
   ByteStream,
+  evalRequire,
   generateByteStreamFromBuffer,
   isBrowser,
   readByteStream,
@@ -55,9 +56,7 @@ async function createRequestInit(options: FetchOptions): Promise<RequestInit> {
   }> => {
     const contentHeaders: { [key: string]: string } = {};
     if (options.multipartData) {
-      const FormData = isBrowser()
-        ? window.FormData
-        : eval('require')('form-data');
+      const FormData = isBrowser() ? window.FormData : evalRequire('form-data');
       const formData = new FormData();
       for (const item of options.multipartData) {
         if (item.fileStream) {
@@ -122,7 +121,7 @@ async function createRequestInit(options: FetchOptions): Promise<RequestInit> {
       ...headers,
       ...(options.auth && {
         Authorization: await options.auth.retrieveAuthorizationHeader(
-          options.networkSession,
+          options.networkSession
         ),
       }),
       'User-Agent': userAgentHeader,
@@ -140,7 +139,7 @@ async function createRequestInit(options: FetchOptions): Promise<RequestInit> {
 export class BoxNetworkClient implements NetworkClient {
   constructor(
     fields?: Omit<BoxNetworkClient, 'fetch'> &
-      Partial<Pick<BoxNetworkClient, 'fetch'>>,
+      Partial<Pick<BoxNetworkClient, 'fetch'>>
   ) {
     Object.assign(this, fields);
   }
@@ -151,7 +150,7 @@ export class BoxNetworkClient implements NetworkClient {
       ? networkSession.interceptors.reduce(
           (modifiedOptions: FetchOptions, interceptor: Interceptor) =>
             interceptor.beforeRequest(modifiedOptions),
-          options,
+          options
         )
       : options;
     const fileStreamBuffer = fetchOptions.fileStream
@@ -171,9 +170,9 @@ export class BoxNetworkClient implements NetworkClient {
         Object.keys(params).length === 0 || fetchOptions.url.endsWith('?')
           ? ''
           : '?',
-        new URLSearchParams(params).toString(),
+        new URLSearchParams(params).toString()
       ),
-      { ...requestInit, redirect: isBrowser() ? 'follow' : 'manual' },
+      { ...requestInit, redirect: isBrowser() ? 'follow' : 'manual' }
     );
 
     const contentType = response.headers.get('content-type') ?? '';
@@ -203,21 +202,21 @@ export class BoxNetworkClient implements NetworkClient {
       fetchResponse = networkSession.interceptors.reduce(
         (modifiedResponse: FetchResponse, interceptor: Interceptor) =>
           interceptor.afterRequest(modifiedResponse),
-        fetchResponse,
+        fetchResponse
       );
     }
 
     const shouldRetry = await networkSession.retryStrategy.shouldRetry(
       fetchOptions,
       fetchResponse,
-      numRetries,
+      numRetries
     );
 
     if (shouldRetry) {
       const retryTimeout = networkSession.retryStrategy.retryAfter(
         fetchOptions,
         fetchResponse,
-        numRetries,
+        numRetries
       );
       await new Promise((resolve) => setTimeout(resolve, retryTimeout));
       return this.fetch({ ...options, numRetries: numRetries + 1 });
@@ -290,7 +289,7 @@ async function calculateMD5Hash(data: string | Buffer): Promise<string> {
   }
 
   // Node environment
-  createHash = eval('require')('crypto').createHash;
+  createHash = evalRequire('crypto').createHash;
   return createHash('sha1').update(data).digest('hex');
 }
 
