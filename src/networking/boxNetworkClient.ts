@@ -56,7 +56,7 @@ async function createRequestInit(options: FetchOptions): Promise<RequestInit> {
   }> => {
     const contentHeaders: { [key: string]: string } = {};
     if (options.multipartData) {
-      const FormData = isBrowser() ? window.FormData : evalRequire('form-data');
+      const FormData = isBrowser() ? window.FormData : require('form-data');
       const formData = new FormData();
       for (const item of options.multipartData) {
         if (item.fileStream) {

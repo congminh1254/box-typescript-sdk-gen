@@ -418,7 +418,7 @@ export function createAgent(options?: AgentOptions, proxyConfig?: any): Agent {
   if (isBrowser()) {
     return undefined;
   }
-  const ProxyAgent = evalRequire('proxy-agent').ProxyAgent;
+  const ProxyAgent = require('proxy-agent').ProxyAgent;
   let agentOptions = options;
 
   if (proxyConfig && proxyConfig.url) {
