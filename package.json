@@ -1,7 +1,7 @@
 {
   "name": "box-typescript-sdk-gen",
   "author": "Box <oss@box.com>",
-  "version": "1.13.0",
+  "version": "1.13.1",
   "description": "Official Box TypeScript Generated SDK",
   "keywords": [
     "box",
@@ -13,9 +13,14 @@
   "engines": {
     "node": ">=16.0.0"
   },
-  "main": "./lib/index.js",
+  "main": "lib/index.js",
+  "browser": {
+    "./src/internal/utils.ts": "./src/internal/utils-browser.ts",
+    "./lib/internal/utils.js": "./lib/internal/utils-browser.js"
+  },
+  "types": "lib/index.d.ts",
   "scripts": {
-    "build": "tsc",
+    "build": "webpack --config webpack.config.js",
     "postbuild": "rollup -c",
     "start": "echo \"Error: no start specified\" && exit 1",
     "test": "jest"
@@ -26,14 +31,14 @@
     "url": "https://github.com/box/box-typescript-sdk-gen.git"
   },
   "dependencies": {
-    "form-data": "^4.0.0",
-    "node-fetch": "^2.6.3",
     "buffer": "^6.0.3",
+    "form-data": "^4.0.0",
+    "hash-wasm": "^4.12.0",
     "jose": "^5.2.2",
-    "tslib": "^2.6.2",
-    "uuid": "^9.0.0",
+    "node-fetch": "^2.6.3",
     "proxy-agent": "^6.4.0",
-    "hash-wasm": "^4.12.0"
+    "tslib": "^2.6.2",
+    "uuid": "^9.0.0"
   },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^25.0.7",
@@ -45,9 +50,13 @@
     "@types/node-fetch": "2.6.3",
     "@types/uuid": "^9.0.1",
     "jest": "^29.5.0",
+    "rollup": "^4.4.0",
     "ts-jest": "^29.1.0",
-    "typescript": "*",
-    "rollup": "^4.4.0"
+    "ts-loader": "^9.5.2",
+    "typescript": "^5.7.3",
+    "webpack": "^5.98.0",
+    "webpack-cli": "^6.0.1",
+    "webpack-node-externals": "^3.0.0"
   },
   "files": [
     "lib",

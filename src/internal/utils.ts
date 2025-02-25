@@ -1,20 +1,16 @@
 import { Buffer } from 'buffer';
-import type { Readable } from 'stream';
+import { Readable } from 'stream';
 import { v4 as uuidv4 } from 'uuid';
 import { SignJWT, importPKCS8 } from 'jose';
-import { createHMAC, createSHA1, createSHA256 } from 'hash-wasm';
+import { default as crypto } from 'crypto';
+import { default as fs } from 'fs';
+import { ProxyAgent } from 'proxy-agent';
+import { default as FormData } from 'form-data';
 
 export function isBrowser() {
   return (
     typeof window === 'object' && typeof document === 'object' && window.crypto
   );
-}
-
-export function evalRequire(lib: string) {
-  if (isBrowser()) {
-    throw new Error('This method is not usable in the browser');
-  }
-  return require(lib);
 }
 
 export function getUuid() {
@@ -29,7 +25,7 @@ export function hexToBase64(data: string): string {
   return Buffer.from(data, 'hex').toString('base64');
 }
 
-export { Buffer, Readable as ByteStream };
+export { Buffer, Readable as ByteStream, FormData, crypto as Crypto };
 export type { CancellationController, CancellationToken };
 export type Iterator<T = any> = AsyncIterator<T>;
 export type AgentOptions = any;
@@ -106,46 +102,14 @@ export class Hash {
 
   constructor({ algorithm }: { algorithm: HashName }) {
     this.algorithm = algorithm;
-    if (isBrowser()) {
-      this.#hash = undefined;
-    } else {
-      this.#hash = evalRequire('crypto').createHash(algorithm);
-    }
-  }
-
-  async initializeBrowserHash() {
-    switch (this.algorithm) {
-      case 'sha1':
-        this.#hash = await createSHA1();
-        this.#hash.init();
-        break;
-      default:
-        throw new Error(`Unsupported algorithm: ${this.algorithm}`);
-    }
+      this.#hash = crypto.createHash(algorithm);
   }
 
   async updateHash(data: Buffer) {
-    if (isBrowser()) {
-      if (!this.#hash) {
-        await this.initializeBrowserHash();
-      }
-    }
     this.#hash.update(data);
   }
 
   async digestHash(encoding: DigestHashType = 'base64'): Promise<string> {
-    if (isBrowser()) {
-      if (!this.#hash) {
-        await this.initializeBrowserHash();
-      }
-      const d = this.#hash.digest('binary');
-      switch (encoding) {
-        case 'base64':
-          return Buffer.from(d).toString('base64');
-        default:
-          throw new Error(`Unsupported encoding: ${encoding}`);
-      }
-    }
     return this.#hash.digest(encoding);
   }
 }
@@ -155,26 +119,13 @@ export function getEnvVar(name: string) {
 }
 
 export function generateByteBuffer(size: number): Buffer {
-  if (isBrowser()) {
-    const buffer = new Uint8Array(size);
-    window.crypto.getRandomValues(buffer);
-    return Buffer.from(buffer);
-  }
-  const crypto = evalRequire('crypto');
   return crypto.randomBytes(size);
 }
 
 export function generateByteStreamFromBuffer(
   buffer: Buffer | ArrayBuffer,
 ): Readable {
-  return isBrowser()
-    ? new ReadableStream<Uint8Array>({
-        start(controller) {
-          controller.enqueue(new Uint8Array(buffer));
-          controller.close();
-        },
-      })
-    : evalRequire('stream').Readable.from(Buffer.from(buffer));
+    return Readable.from(Buffer.from(buffer));
 }
 
 export function generateByteStream(size: number): Readable {
@@ -190,36 +141,11 @@ export function bufferLength(buffer: Buffer): number {
 }
 
 export function decodeBase64ByteStream(data: string): Readable {
-  return isBrowser()
-    ? new ReadableStream<Uint8Array>({
-        start(controller) {
-          const decodedStr = atob(data);
-          const buffer = new ArrayBuffer(decodedStr.length);
-          const array = new Uint8Array(buffer);
-          for (let i = 0; i < decodedStr.length; i++) {
-            array[i] = decodedStr.charCodeAt(i);
-          }
-          controller.enqueue(array);
-          controller.close();
-        },
-      })
-    : evalRequire('stream').Readable.from(Buffer.from(data, 'base64'));
+  return Readable.from(Buffer.from(data, 'base64'));
 }
 
 export function stringToByteStream(data: string): Readable {
-  return isBrowser()
-    ? new ReadableStream<Uint8Array>({
-        start(controller) {
-          const buffer = new ArrayBuffer(data.length);
-          const array = new Uint8Array(buffer);
-          for (let i = 0; i < data.length; i++) {
-            array[i] = data.charCodeAt(i);
-          }
-          controller.enqueue(array);
-          controller.close();
-        },
-      })
-    : evalRequire('stream').Readable.from(Buffer.from(data, 'ascii'));
+  return Readable.from(Buffer.from(data, 'ascii'));
 }
 
 export async function readByteStream(byteStream: Readable): Promise<Buffer> {
@@ -372,7 +298,6 @@ export async function createJwtAssertion(
   key: JwtKey,
   options: JwtSignOptions,
 ): Promise<string> {
-  const crypto = evalRequire('crypto');
   const privateKey = crypto.createPrivateKey({
     key: key.key,
     format: 'pem',
@@ -401,7 +326,7 @@ export async function createJwtAssertion(
  * Reads a text file and returns its content.
  */
 export function readTextFromFile(filepath: string): string {
-  return evalRequire('fs').readFileSync(filepath, 'utf8');
+  return fs.readFileSync(filepath, 'utf8');
 }
 
 /**
@@ -415,10 +340,6 @@ export function getEpochTimeInSeconds(): number {
  * Create web agent from proxy agent options.
  */
 export function createAgent(options?: AgentOptions, proxyConfig?: any): Agent {
-  if (isBrowser()) {
-    return undefined;
-  }
-  const ProxyAgent = evalRequire('proxy-agent').ProxyAgent;
   let agentOptions = options;
 
   if (proxyConfig && proxyConfig.url) {
@@ -517,21 +438,11 @@ export async function computeWebhookSignature(
     return null;
   }
   let signature: string | null = null;
-  if (isBrowser()) {
-    const hashFunc = createSHA256();
-    const hmac = await createHMAC(hashFunc, signatureKey);
-    hmac.init();
-    hmac.update(escapedBody);
-    hmac.update(headers['box-delivery-timestamp']);
-    const result = await hmac.digest('binary');
-    signature = Buffer.from(result).toString('base64');
-  } else {
-    let crypto = evalRequire('crypto');
-    let hmac = crypto.createHmac('sha256', signatureKey);
-    hmac.update(escapedBody);
-    hmac.update(headers['box-delivery-timestamp']);
-    signature = hmac.digest('base64');
-  }
+
+  let hmac = crypto.createHmac('sha256', signatureKey);
+  hmac.update(escapedBody);
+  hmac.update(headers['box-delivery-timestamp']);
+  signature = hmac.digest('base64');
   return signature;
 }
 
