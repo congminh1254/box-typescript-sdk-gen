@@ -36,13 +36,13 @@ export function generateByteBuffer(size: number): Buffer {
 
 export function generateReadableStreamFromFile(
   file: any,
-  chunkSize: number = 1024 * 1024,
+  chunkSize: number = 1024 * 1024
 ): ReadableStream {
   throw new Error('This function is only supported in the browser');
 }
 
 export function generateByteStreamFromBuffer(
-  buffer: Buffer | ArrayBuffer,
+  buffer: Buffer | ArrayBuffer
 ): Readable {
   return Readable.from(Buffer.from(buffer));
 }
@@ -66,7 +66,7 @@ export async function readByteStream(byteStream: Readable): Promise<Buffer> {
 export async function* iterateChunks(
   stream: Readable,
   chunkSize: number,
-  fileSize: number,
+  fileSize: number
 ): AsyncGenerator<Readable> {
   let buffers: Buffer[] = [];
   let totalSize = 0;
@@ -90,7 +90,7 @@ export async function* iterateChunks(
       let start = 0;
       while (totalSize >= chunkSize) {
         yield generateByteStreamFromBuffer(
-          buffer.subarray(start, start + chunkSize),
+          buffer.subarray(start, start + chunkSize)
         );
         start += chunkSize;
         totalSize -= chunkSize;
@@ -102,7 +102,7 @@ export async function* iterateChunks(
 
   if (consumedSize !== fileSize) {
     throw new Error(
-      `Stream size ${consumedSize} does not match expected file size ${fileSize}`,
+      `Stream size ${consumedSize} does not match expected file size ${fileSize}`
     );
   }
   if (totalSize > 0) {
@@ -154,7 +154,7 @@ export async function createJwtAssertion(
     readonly [key: string]: any;
   },
   key: JwtKey,
-  options: JwtSignOptions,
+  options: JwtSignOptions
 ): Promise<string> {
   const privateKey = crypto.createPrivateKey({
     key: key.key,
@@ -206,7 +206,7 @@ export function createAgent(options?: AgentOptions, proxyConfig?: any): Agent {
     const proxyUrl = `http://${proxyAuth}${proxyHost}`;
     agentOptions = Object.assign(
       { getProxyForUrl: (url: string) => proxyUrl },
-      options || {},
+      options || {}
     );
   }
 
@@ -223,7 +223,7 @@ export function createAgent(options?: AgentOptions, proxyConfig?: any): Agent {
 export function jsonStringifyWithEscapedUnicode(body: string) {
   return body.replace(
     /[\u007f-\uffff]/g,
-    (char) => `\\u${`0000${char.charCodeAt(0).toString(16)}`.slice(-4)}`,
+    (char) => `\\u${`0000${char.charCodeAt(0).toString(16)}`.slice(-4)}`
   );
 }
 
@@ -242,11 +242,11 @@ export async function computeWebhookSignature(
   headers: {
     [key: string]: string;
   },
-  signatureKey: string,
+  signatureKey: string
 ): Promise<string | null> {
   const escapedBody = jsonStringifyWithEscapedUnicode(body).replace(
     /\//g,
-    '\\/',
+    '\\/'
   );
   if (headers['box-signature-version'] !== '1') {
     return null;
@@ -269,4 +269,18 @@ export function random(min: number, max: number): number {
 
 export async function calculateMD5Hash(data: string | Buffer): Promise<string> {
   return crypto.createHash('sha1').update(data).digest('hex');
+}
+
+export function getEnvVar(name: string): string {
+  if (typeof process === 'undefined' || !process.env) {
+    throw new Error('This function requires a Node.js environment');
+  }
+  return process.env[name] || '';
+}
+
+export function setEnvVar(name: string, value: string): void {
+  if (typeof process === 'undefined' || !process.env) {
+    throw new Error('This function requires a Node.js environment');
+  }
+  process.env[name] = value;
 }

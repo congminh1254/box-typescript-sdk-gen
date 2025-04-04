@@ -51,14 +51,23 @@ export class Hash {
 }
 
 export function generateByteBuffer(size: number): Buffer {
+  // Maximum size for crypto.getRandomValues is 65536 bytes
+  const MAX_CHUNK_SIZE = 65536;
   const buffer = new Uint8Array(size);
-  window.crypto.getRandomValues(buffer);
+
+  for (let offset = 0; offset < size; offset += MAX_CHUNK_SIZE) {
+    const length = Math.min(MAX_CHUNK_SIZE, size - offset);
+    const chunk = new Uint8Array(length);
+    window.crypto.getRandomValues(chunk);
+    buffer.set(chunk, offset);
+  }
+
   return Buffer.from(buffer);
 }
 
 export function generateReadableStreamFromFile(
   file: any,
-  chunkSize: number = 1024 * 1024,
+  chunkSize: number = 1024 * 1024
 ): ReadableStream {
   let offset = 0;
 
@@ -79,7 +88,7 @@ export function generateReadableStreamFromFile(
 }
 
 export function generateByteStreamFromBuffer(
-  buffer: Buffer | ArrayBuffer,
+  buffer: Buffer | ArrayBuffer
 ): ReadableStream {
   return new ReadableStream<Uint8Array>({
     start(controller) {
@@ -118,6 +127,27 @@ export function stringToByteStream(data: string): ReadableStream {
   });
 }
 
+export function getEnvVar(name: string): string {
+  if (
+    typeof window !== 'undefined' &&
+    (window as any).env &&
+    (window as any).env[name]
+  ) {
+    return (window as any).env[name];
+  }
+  return '';
+}
+
+export function setEnvVar(name: string, value: string): void {
+  if (typeof window === 'undefined') {
+    throw new Error('This function requires a browser environment');
+  }
+  if (!(window as any).env) {
+    (window as any).env = {};
+  }
+  (window as any).env[name] = value;
+}
+
 export async function readByteStream(byteStream: ByteStream): Promise<Buffer> {
   const buffers: Buffer[] = [];
 
@@ -135,7 +165,7 @@ export async function readByteStream(byteStream: ByteStream): Promise<Buffer> {
 export async function* iterateChunks(
   stream: ByteStream,
   chunkSize: number,
-  fileSize: number,
+  fileSize: number
 ): AsyncGenerator<ByteStream> {
   let buffers: Buffer[] = [];
   let totalSize = 0;
@@ -156,7 +186,7 @@ export async function* iterateChunks(
 
   if (consumedSize !== fileSize) {
     throw new Error(
-      `Stream size ${consumedSize} does not match expected file size ${fileSize}`,
+      `Stream size ${consumedSize} does not match expected file size ${fileSize}`
     );
   }
 
@@ -175,7 +205,7 @@ export async function* iterateChunks(
 
     while (totalSize >= chunkSize) {
       yield await generateByteStreamFromBuffer(
-        buffer.subarray(start, start + chunkSize),
+        buffer.subarray(start, start + chunkSize)
       );
       start += chunkSize;
       totalSize -= chunkSize;
@@ -204,7 +234,7 @@ export async function createJwtAssertion(
     readonly [key: string]: any;
   },
   key: JwtKey,
-  options: JwtSignOptions,
+  options: JwtSignOptions
 ): Promise<string> {
   throw new Error('This function is not supported in the browser');
 }
@@ -233,7 +263,7 @@ export function createAgent(options?: AgentOptions, proxyConfig?: any): Agent {
 export function jsonStringifyWithEscapedUnicode(body: string) {
   return body.replace(
     /[\u007f-\uffff]/g,
-    (char) => `\\u${`0000${char.charCodeAt(0).toString(16)}`.slice(-4)}`,
+    (char) => `\\u${`0000${char.charCodeAt(0).toString(16)}`.slice(-4)}`
   );
 }
 
@@ -252,11 +282,11 @@ export async function computeWebhookSignature(
   headers: {
     [key: string]: string;
   },
-  signatureKey: string,
+  signatureKey: string
 ): Promise<string | null> {
   const escapedBody = jsonStringifyWithEscapedUnicode(body).replace(
     /\//g,
-    '\\/',
+    '\\/'
   );
   if (headers['box-signature-version'] !== '1') {
     return null;
